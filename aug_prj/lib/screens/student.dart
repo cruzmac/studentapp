@@ -1,3 +1,5 @@
+import 'package:aug_prj/design/end_drawer.dart';
+import 'package:aug_prj/models/list_model.dart';
 import 'package:flutter/material.dart';
 
 class StudentDash extends StatefulWidget {
@@ -8,60 +10,22 @@ class StudentDash extends StatefulWidget {
 }
 
 class _StudentDashState extends State<StudentDash> {
-  List<Map> list = [
-    {'name': 'Sign Up', 'color': 'red'},
-    {'name': 'Profile', 'color': 'deepPurpleAccent'}
+  List<ListModel> list = [
+    ListModel(
+      name: 'Time Table',
+      color: Colors.deepPurpleAccent,
+      type:'timetable'
+    ),
+     ListModel(
+      name: 'Attendance',
+      color: Colors.deepOrangeAccent,
+      type:'attendance'
+    ),
   ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      endDrawer: Drawer(
-        backgroundColor: const Color.fromARGB(255, 180, 101, 194),
-        child: ListView(
-          children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Color.fromARGB(255, 206, 141, 217),
-              ),
-              child: Text(
-                'Student App',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                ),
-              ),
-            ),
-            ListTile(
-              title: const Text(
-                "Home",
-                style: TextStyle(color: Colors.white),
-              ),
-              leading: const Icon(
-                Icons.home,
-                size: 35,
-                color: Colors.purple,
-              ),
-              onTap: () {
-                Navigator.of(context).pushNamed('/home');
-              },
-            ),
-            ListTile(
-              title: const Text(
-                "Students",
-                style: TextStyle(color: Colors.white),
-              ),
-              leading: const Icon(
-                Icons.person,
-                size: 35,
-                color: Colors.purple,
-              ),
-              onTap: () {
-                Navigator.of(context).pushNamed('/student');
-              },
-            ),
-          ],
-        ),
-      ),
+      endDrawer: enddrawer(context),
       appBar: AppBar(
         title: const Text('Student DashBoard'),
         backgroundColor: const Color.fromARGB(255, 219, 162, 229),
@@ -76,14 +40,22 @@ class _StudentDashState extends State<StudentDash> {
               height: 150,
               child: ListTile(
                 onTap: () {
-                  Navigator.of(context).pushNamed('/signupgen');
+                  final type = list[index].type;
+                  switch (type) {
+                    case 'signup':
+                      Navigator.of(context).pushNamed('/signupgen');
+                      break;
+                    case 'time':
+                      Navigator.of(context).pushNamed('/timetable');
+                      break;
+                  }
                 },
                 textColor: Colors.white,
-                tileColor:Colors.deepPurpleAccent,
+                tileColor: list[index].color,
                 shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(20))),
                 title: Text(
-                  list[index]['name'],
+                  list[index].name ??'',
                   style: const TextStyle(fontSize: 30),
                 ),
                 contentPadding: const EdgeInsets.symmetric(

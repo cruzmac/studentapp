@@ -12,24 +12,40 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  // Future SignIn() async {
-  //     try {
-  //       await FirebaseAuth.instance.signInWithEmailAndPassword(
-  //         email: _emailcontroller.text.trim(),
-  //         password: _passwordcontroller.text.trim(),
-  //       );
-  //       if (FirebaseAuth.instance.currentUser != null) {
-  //         Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);
-  //       }
-  //     } on FirebaseAuthException catch (e) {
-  //       Utils.cupertinoBox(context, e.message);
-  //     } on Exception catch (e) {
-  //       Utils.cupertinoBox(context, e.toString());
-  //     }
-  //   }
+  final TextEditingController _emailcontroller = TextEditingController();
+  final TextEditingController _passwordcontroller = TextEditingController();
+  @override
+  void dispose() {
+    _emailcontroller.dispose();
+    _passwordcontroller.dispose();
+    super.dispose();
+  }
+
+  Future SignIn() async {
+    try {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: _emailcontroller.text.trim(),
+        password: _passwordcontroller.text.trim(),
+      );
+      if (FirebaseAuth.instance.currentUser != null) {
+        Navigator.of(context)
+            .pushNamedAndRemoveUntil('/home', (route) => false);
+      }
+    } on FirebaseAuthException catch (e) {
+      Utils.cupertinoBox(context, e.message);
+    } on Exception catch (e) {
+      Utils.cupertinoBox(context, e.toString());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Sign In'),
+        backgroundColor: const Color.fromARGB(255, 219, 162, 229),
+        centerTitle: true,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -49,14 +65,14 @@ class _SignUpState extends State<SignUp> {
                       FormDesign(),
                       FormDesign(),
                       ElevatedButton(
-                        onPressed: () {
-                         
-                        },
-                        child: const Text('Log In'),
-                        style: ElevatedButton.styleFrom(
-                            primary: const Color.fromARGB(255, 210, 82, 232),
-                            textStyle: const TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.w400))),
+                          onPressed: () {
+                            const SignUp();
+                          },
+                          child: const Text('Sign In'),
+                          style: ElevatedButton.styleFrom(
+                              primary: const Color.fromARGB(255, 210, 82, 232),
+                              textStyle: const TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.w400))),
                     ]),
               ),
             ),
