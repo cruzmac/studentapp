@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class FormDesign extends StatelessWidget {
   const FormDesign({Key? key, this.labelText, this.controller})
       : super(key: key);
@@ -9,7 +8,7 @@ class FormDesign extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
-      constraints: const BoxConstraints.tightFor(width:250 ,height: 40),
+      constraints: const BoxConstraints.tightFor(width:230 ,height: 40),
       child: TextFormField(
         controller: controller,
         style:const  TextStyle(color: Colors.black),

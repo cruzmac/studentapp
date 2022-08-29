@@ -12,15 +12,9 @@ class StudentDash extends StatefulWidget {
 class _StudentDashState extends State<StudentDash> {
   List<ListModel> list = [
     ListModel(
-      name: 'Time Table',
-      color: Colors.deepPurpleAccent,
-      type:'timetable'
-    ),
-     ListModel(
-      name: 'Attendance',
-      color: Colors.deepOrangeAccent,
-      type:'attendance'
-    ),
+        name: 'Time Table', color: Colors.deepPurpleAccent, type: 'timetable'),
+    ListModel(
+        name: 'Attendance', color: Colors.deepOrangeAccent, type: 'attendance'),
   ];
   @override
   Widget build(BuildContext context) {
@@ -33,7 +27,7 @@ class _StudentDashState extends State<StudentDash> {
       ),
       body: ListView.separated(
           separatorBuilder: (context, index) => const SizedBox(height: 15),
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 30),
           itemCount: 2,
           itemBuilder: (context, index) {
             return SizedBox(
@@ -42,10 +36,10 @@ class _StudentDashState extends State<StudentDash> {
                 onTap: () {
                   final type = list[index].type;
                   switch (type) {
-                    case 'signup':
+                    case 'attendance':
                       Navigator.of(context).pushNamed('/signupgen');
                       break;
-                    case 'time':
+                    case 'timetable':
                       Navigator.of(context).pushNamed('/timetable');
                       break;
                   }
@@ -55,7 +49,7 @@ class _StudentDashState extends State<StudentDash> {
                 shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(20))),
                 title: Text(
-                  list[index].name ??'',
+                  list[index].name ?? '',
                   style: const TextStyle(fontSize: 30),
                 ),
                 contentPadding: const EdgeInsets.symmetric(

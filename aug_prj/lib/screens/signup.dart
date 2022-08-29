@@ -21,7 +21,7 @@ class _SignUpState extends State<SignUp> {
     super.dispose();
   }
 
-  Future SignIn() async {
+  Future signIn() async {
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: _emailcontroller.text.trim(),
@@ -46,37 +46,39 @@ class _SignUpState extends State<SignUp> {
         backgroundColor: const Color.fromARGB(255, 219, 162, 229),
         centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              height: 240,
-              width: 300,
-              decoration: AppTheme.design,
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text('Create Account'),
-                      FormDesign(),
-                      FormDesign(),
-                      ElevatedButton(
-                          onPressed: () {
-                            const SignUp();
-                          },
-                          child: const Text('Sign In'),
-                          style: ElevatedButton.styleFrom(
-                              primary: const Color.fromARGB(255, 210, 82, 232),
-                              textStyle: const TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.w400))),
-                    ]),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            children: [
+              Container(
+                alignment: Alignment.center,
+                height: 350,
+                width: 350,
+                decoration: AppTheme.design,
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        const Text('Create Account',style: TextStyle(fontSize: 20),),
+                        const FormDesign(labelText: 'Email',),
+                        const FormDesign(labelText: 'Password',),
+                        ElevatedButton(
+                            onPressed: () {
+                              signIn();
+                            },
+                            child: const Text('Create'),
+                            style: ElevatedButton.styleFrom(
+                                primary: const Color.fromARGB(255, 210, 82, 232),
+                                textStyle: const TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.w400))),
+                      ]),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -6,6 +6,7 @@ import 'package:aug_prj/screens/time_table.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,9 +20,12 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
+      // theme: ThemeData(
+      //   textTheme: GoogleFonts.lobsterTextTheme(Theme.of(context).textTheme),
+      // ),
       initialRoute: '/',
       onGenerateRoute: pageroutes,
     );
@@ -34,7 +38,8 @@ Route<dynamic>? pageroutes(RouteSettings settings) {
       final isLoggedin = FirebaseAuth.instance.currentUser;
       return (MaterialPageRoute(
           settings: settings,
-          builder: (BuildContext context) =>isLoggedin != null ? const HomePage() : const LoginPage()));
+          builder: (BuildContext context) =>
+              isLoggedin != null ? const HomePage() : const LoginPage()));
     case '/home':
       return (MaterialPageRoute(
           settings: settings,

@@ -29,6 +29,7 @@ Drawer enddrawer(BuildContext context) {
             color: Colors.purple,
           ),
           onTap: () {
+            Navigator.pop(context);
             Navigator.of(context).pushNamed('/home');
           },
         ),
@@ -43,6 +44,7 @@ Drawer enddrawer(BuildContext context) {
             color: Colors.purple,
           ),
           onTap: () {
+            Navigator.pop(context);
             Navigator.of(context).pushNamed('/student');
           },
         ),
@@ -58,6 +60,7 @@ Drawer enddrawer(BuildContext context) {
           ),
           onTap: () async {
             await FirebaseAuth.instance.signOut();
+            Navigator.pop(context);
             Navigator.of(context)
                 .pushNamedAndRemoveUntil('/', (route) => false);
           },
