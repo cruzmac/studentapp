@@ -14,7 +14,9 @@ class _StudentDashState extends State<StudentDash> {
     ListModel(
         name: 'Time Table', color: Colors.deepPurpleAccent, type: 'timetable'),
     ListModel(
-        name: 'Attendance', color: Colors.deepOrangeAccent, type: 'attendance'),
+        name: 'Events', color: Colors.deepOrangeAccent, type: 'events'),
+    ListModel(
+        name: 'Create Account', color: Colors.redAccent, type: 'createacct'),    
   ];
   @override
   Widget build(BuildContext context) {
@@ -22,13 +24,12 @@ class _StudentDashState extends State<StudentDash> {
       endDrawer: enddrawer(context),
       appBar: AppBar(
         title: const Text('Student DashBoard'),
-        backgroundColor: const Color.fromARGB(255, 219, 162, 229),
         centerTitle: true,
       ),
       body: ListView.separated(
           separatorBuilder: (context, index) => const SizedBox(height: 15),
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 30),
-          itemCount: 2,
+          itemCount: list.length,
           itemBuilder: (context, index) {
             return SizedBox(
               height: 150,
@@ -36,12 +37,15 @@ class _StudentDashState extends State<StudentDash> {
                 onTap: () {
                   final type = list[index].type;
                   switch (type) {
-                    case 'attendance':
-                      Navigator.of(context).pushNamed('/signupgen');
+                    case 'events':
+                      Navigator.of(context).pushNamed('/events');
                       break;
                     case 'timetable':
                       Navigator.of(context).pushNamed('/timetable');
                       break;
+                    case 'createacct':
+                      Navigator.of(context).pushNamed('/signupgen');
+                      break;  
                   }
                 },
                 textColor: Colors.white,

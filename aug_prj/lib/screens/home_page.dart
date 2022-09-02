@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../design/end_drawer.dart';
+import '../design/end_drawer.dart'; 
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -16,7 +16,6 @@ class _HomePageState extends State<HomePage> {
       endDrawer: enddrawer(context),
       appBar: AppBar(
         title: const Text('DashBoard'),
-        backgroundColor: const Color.fromARGB(255, 219, 162, 229),
         centerTitle: true,
       ),
     );

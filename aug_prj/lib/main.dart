@@ -1,3 +1,4 @@
+import 'package:aug_prj/screens/events.dart';
 import 'package:aug_prj/screens/home_page.dart';
 import 'package:aug_prj/screens/login_page.dart';
 import 'package:aug_prj/screens/signup.dart';
@@ -23,9 +24,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      // theme: ThemeData(
-      //   textTheme: GoogleFonts.lobsterTextTheme(Theme.of(context).textTheme),
-      // ),
+      theme: ThemeData(
+        // textTheme: GoogleFonts.lobsterTextTheme(Theme.of(context).textTheme),
+        fontFamily: GoogleFonts.lato().fontFamily,
+        appBarTheme:const  AppBarTheme(backgroundColor:Colors.black12),
+      ),
       initialRoute: '/',
       onGenerateRoute: pageroutes,
     );
@@ -56,6 +59,10 @@ Route<dynamic>? pageroutes(RouteSettings settings) {
       return (MaterialPageRoute(
           settings: settings,
           builder: (BuildContext context) => const TimeTable()));
+    case '/events':
+      return (MaterialPageRoute(
+          settings: settings,
+          builder: (BuildContext context) => const Events()));      
     default:
   }
   return null;

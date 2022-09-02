@@ -20,18 +20,18 @@ class FormDesign extends StatelessWidget {
           enabledBorder: const OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(3)),
             borderSide: BorderSide(
-              color: Colors.purpleAccent,
+              color: Colors.black,
               width: 1,
             ),
           ),
           focusedBorder: const OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(3)),
             borderSide: BorderSide(
-              color: Colors.purpleAccent,
+              color: Colors.black,
               width: 1,
             ),
           ),
-          fillColor: Colors.white,
+          fillColor: Colors.black,
         ),
         autovalidateMode: AutovalidateMode.onUserInteraction,
       ),

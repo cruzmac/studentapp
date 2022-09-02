@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 
 Drawer enddrawer(BuildContext context) {
   return Drawer(
-    backgroundColor: const Color.fromARGB(255, 206, 141, 217),
+    backgroundColor: Colors.white24,
     child: ListView(
       children: [
         const DrawerHeader(
           decoration: BoxDecoration(
-            color: Color.fromARGB(255, 180, 101, 194),
+            color: Colors.black12,
           ),
-          child: Text(
+          child: SelectableText(
             'Student App',
             style: TextStyle(
               color: Colors.white,
@@ -26,7 +26,7 @@ Drawer enddrawer(BuildContext context) {
           leading: const Icon(
             Icons.home,
             size: 35,
-            color: Colors.purple,
+            color: Colors.white,
           ),
           onTap: () {
             Navigator.pop(context);
@@ -41,7 +41,7 @@ Drawer enddrawer(BuildContext context) {
           leading: const Icon(
             Icons.person,
             size: 35,
-            color: Colors.purple,
+            color: Colors.white,
           ),
           onTap: () {
             Navigator.pop(context);
@@ -56,7 +56,7 @@ Drawer enddrawer(BuildContext context) {
           leading: const Icon(
             Icons.logout,
             size: 35,
-            color: Colors.purple,
+            color: Colors.white,
           ),
           onTap: () async {
             await FirebaseAuth.instance.signOut();

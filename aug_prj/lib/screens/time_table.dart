@@ -1,3 +1,4 @@
+import 'package:aug_prj/design/box_design.dart';
 import 'package:aug_prj/design/form_design.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +16,7 @@ class _TimeTableState extends State<TimeTable> {
       children: [
         Text(
           name ?? '',
-          style: const TextStyle(fontSize: 20),
+          style: const TextStyle(fontSize: 15),
         ),
         const FormDesign(
           labelText: 'Day order',
@@ -29,7 +30,6 @@ class _TimeTableState extends State<TimeTable> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Time Table'),
-        backgroundColor: const Color.fromARGB(255, 219, 162, 229),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -40,14 +40,7 @@ class _TimeTableState extends State<TimeTable> {
             children: [
               Container(
                 alignment: Alignment.topCenter,
-                decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 219, 162, 229),
-                    border: const Border(
-                        bottom: BorderSide(width: 2, color: Colors.purple),
-                        left: BorderSide(width: 2, color: Colors.purple),
-                        right: BorderSide(width: 2, color: Colors.purple),
-                        top: BorderSide(width: 2, color: Colors.purple)),
-                    borderRadius: BorderRadius.circular(2)),
+                decoration:AppTheme.design,
                 padding: const EdgeInsets.all(20),
                 height: 100,
                 width: 400,
@@ -57,17 +50,10 @@ class _TimeTableState extends State<TimeTable> {
                 ),
               ),
               const SizedBox(
-                height: 20,
+                height: 30,
               ),
               Container(
-                  decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 233, 195, 240),
-                      border: const Border(
-                          bottom: BorderSide(width: 2, color: Colors.purple),
-                          left: BorderSide(width: 2, color: Colors.purple),
-                          right: BorderSide(width: 2, color: Colors.purple),
-                          top: BorderSide(width: 2, color: Colors.purple)),
-                      borderRadius: BorderRadius.circular(2)),
+                  decoration:AppTheme.design,
                   height: 400,
                   width: 400,
                   padding:
