@@ -19,14 +19,12 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
     tabcontroller = TabController(length: 2, vsync: this);
     super.initState();
   }
-
   @override
   void dispose() {
     _emailcontroller.dispose();
     _passwordcontroller.dispose();
     super.dispose();
   }
-
   Future signIn() async {
     try {
       final userCredential =
@@ -45,7 +43,6 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
       Utils.cupertinoBox(context, e.toString());
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,18 +72,19 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
           child: Column(
             children: [
               TabBar(
+                indicatorColor: Colors.purple,
                 isScrollable: true,
                 controller: tabcontroller,
                 tabs: const [
                   Tab(
                     child: Text(
-                      'Up Coming',
+                      'Create',
                       style: TextStyle(color: Colors.black, fontSize: 20),
                     ),
                   ),
                   Tab(
                     child: Text(
-                      'Finished',
+                      'Delete',
                       style: TextStyle(color: Colors.black, fontSize: 20),
                     ),
                   ),
@@ -115,7 +113,7 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
             Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
            Text(
             '$str Account',
-            style: TextStyle(fontSize: 20),
+            style:const TextStyle(fontSize: 30,color: Colors.purple),
           ),
           FormDesign(
             labelText: 'Email',

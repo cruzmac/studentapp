@@ -62,7 +62,7 @@ class _EventsState extends State<Events> with SingleTickerProviderStateMixin {
                 ],
               ),
               Expanded(
-                child: TabBarView(controller: tabcontroller, children:[
+                child: TabBarView(controller: tabcontroller, children: [
                   Container(
                     child: ListView.separated(
                       separatorBuilder: (context, index) => const SizedBox(

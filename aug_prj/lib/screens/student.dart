@@ -13,10 +13,10 @@ class _StudentDashState extends State<StudentDash> {
   List<ListModel> list = [
     ListModel(
         name: 'Time Table', color: Colors.deepPurpleAccent, type: 'timetable'),
+    ListModel(name: 'Events', color: Colors.deepOrangeAccent, type: 'events'),
     ListModel(
-        name: 'Events', color: Colors.deepOrangeAccent, type: 'events'),
-    ListModel(
-        name: 'Create Account', color: Colors.redAccent, type: 'createacct'),    
+        name: 'Create Account', color: Colors.redAccent, type: 'createacct'),
+    ListModel(name: 'List', color: Colors.blueAccent, type: 'acctlist'),
   ];
   @override
   Widget build(BuildContext context) {
@@ -45,7 +45,10 @@ class _StudentDashState extends State<StudentDash> {
                       break;
                     case 'createacct':
                       Navigator.of(context).pushNamed('/signupgen');
-                      break;  
+                      break;
+                    case 'acctlist':
+                      Navigator.of(context).pushNamed('/acctlist');
+                      break;
                   }
                 },
                 textColor: Colors.white,

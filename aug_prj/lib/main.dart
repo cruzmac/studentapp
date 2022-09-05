@@ -1,5 +1,6 @@
 import 'package:aug_prj/screens/events.dart';
 import 'package:aug_prj/screens/home_page.dart';
+import 'package:aug_prj/screens/list.dart';
 import 'package:aug_prj/screens/login_page.dart';
 import 'package:aug_prj/screens/signup.dart';
 import 'package:aug_prj/screens/student.dart';
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         // textTheme: GoogleFonts.lobsterTextTheme(Theme.of(context).textTheme),
         fontFamily: GoogleFonts.lato().fontFamily,
-        appBarTheme:const  AppBarTheme(backgroundColor:Colors.black12),
+        appBarTheme: const AppBarTheme(backgroundColor: Colors.black12),
       ),
       initialRoute: '/',
       onGenerateRoute: pageroutes,
@@ -62,7 +63,11 @@ Route<dynamic>? pageroutes(RouteSettings settings) {
     case '/events':
       return (MaterialPageRoute(
           settings: settings,
-          builder: (BuildContext context) => const Events()));      
+          builder: (BuildContext context) => const Events()));
+    case '/acctlist':
+      return (MaterialPageRoute(
+          settings: settings,
+          builder: (BuildContext context) => const AcctList()));
     default:
   }
   return null;
