@@ -1,3 +1,6 @@
+import 'package:aug_prj/Utils/http_error.dart';
+import 'package:aug_prj/models/loginmodel.dart';
+import 'package:aug_prj/repository/login_repository.dart';
 import 'package:flutter/material.dart';
 
 class AcctList extends StatefulWidget {
@@ -8,6 +11,25 @@ class AcctList extends StatefulWidget {
 }
 
 class _AcctListState extends State<AcctList> {
+  List<LogIn> loginlist = [];
+  @override
+  void initState() {
+    super.initState();
+    fetchpost();
+  }
+
+  Future<void> fetchpost() async {
+    try {
+      final login = await LoginRepository().fetchposts();
+      setState(() {
+        loginlist = login;
+      });
+    } on HttpError catch (e) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(e.message)));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,7 +81,6 @@ class _AcctListState extends State<AcctList> {
           }),
           separatorBuilder: (context, index) => Container(
                 height: 1,
-                
                 color: Colors.black,
               ),
           itemCount: 3),
