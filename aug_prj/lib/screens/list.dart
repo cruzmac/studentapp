@@ -30,6 +30,42 @@ class _AcctListState extends State<AcctList> {
     }
   }
 
+  Future<void> deletePost(LogIn login) async {
+    final id = login.user_id;
+    if (id == null) return;
+    try {
+      await LoginRepository.deleteAcct(id);
+      setState(() {
+        loginlist.removeWhere((element) => element.user_id == login.user_id);
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          elevation: 0,
+          backgroundColor: Colors.green,
+          behavior: SnackBarBehavior.floating,
+          content: Row(
+            children: const [
+              Icon(
+                Icons.check_circle,
+                color: Colors.white,
+              ),
+              SizedBox(width: 10),
+              Text(
+                'Post deleted successfully',
+              ),
+            ],
+          ),
+        ),
+      );
+    } on HttpError catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(e.message),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,6 +75,7 @@ class _AcctListState extends State<AcctList> {
       ),
       body: ListView.separated(
           itemBuilder: ((context, index) {
+            final acct = loginlist[index];
             return Padding(
               padding: const EdgeInsets.all(10),
               child: Row(
@@ -57,12 +94,12 @@ class _AcctListState extends State<AcctList> {
                   Expanded(
                       child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
+                    children: [
                       Text(
-                        'email',
-                        style: TextStyle(fontSize: 22),
+                        '${acct.user_id}',
+                        style: const TextStyle(fontSize: 22),
                       ),
-                      Text(
+                      const Text(
                         'password',
                         style: TextStyle(fontSize: 15),
                       ),
@@ -83,7 +120,7 @@ class _AcctListState extends State<AcctList> {
                 height: 1,
                 color: Colors.black,
               ),
-          itemCount: 3),
+          itemCount: loginlist.length),
     );
   }
 }
