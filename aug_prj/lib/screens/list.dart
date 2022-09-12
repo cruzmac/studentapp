@@ -30,6 +30,20 @@ class _AcctListState extends State<AcctList> {
     }
   }
 
+  Future<void> onTapLogin(LogIn login) async {
+    final result =
+         await Navigator.of(context).pushNamed('/acctlist', arguments: login);
+    if (result is LogIn) {
+      final index =
+          loginlist.indexWhere((element) => element.user_id == login.user_id);
+      if (index != -1) {
+        setState(() {
+          loginlist[index] = result;
+        });
+      }
+    }
+  }
+
   Future<void> deletePost(LogIn login) async {
     final id = login.user_id;
     if (id == null) return;
@@ -75,44 +89,47 @@ class _AcctListState extends State<AcctList> {
       ),
       body: ListView.separated(
           itemBuilder: ((context, index) {
-            final acct = loginlist[index];
-            return Padding(
-              padding: const EdgeInsets.all(10),
-              child: Row(
-                children: [
-                  CircleAvatar(
-                    radius: 32,
-                    backgroundColor: Colors.purpleAccent,
-                    child: Text(
-                      '${index + 1}',
-                      style: const TextStyle(color: Colors.black),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 15,
-                  ),
-                  Expanded(
-                      child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '${acct.user_id}',
-                        style: const TextStyle(fontSize: 22),
+            final login = loginlist[index];
+            return InkWell(
+              onTap: () => onTapLogin(login),
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Row(
+                  children: [
+                    CircleAvatar(
+                      radius: 32,
+                      backgroundColor: Colors.purpleAccent,
+                      child: Text(
+                        '${index + 1}',
+                        style: const TextStyle(color: Colors.black),
                       ),
-                      const Text(
-                        'password',
-                        style: TextStyle(fontSize: 15),
-                      ),
-                    ],
-                  )),
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.delete_outline,
-                      color: Colors.red,
                     ),
-                  ),
-                ],
+                    const SizedBox(
+                      width: 15,
+                    ),
+                    Expanded(
+                        child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '${login.user_id}',
+                          style: const TextStyle(fontSize: 22),
+                        ),
+                        Text(
+                          '${login.username}',
+                          style: const TextStyle(fontSize: 15),
+                        ),
+                      ],
+                    )),
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.delete_outline,
+                        color: Colors.red,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             );
           }),

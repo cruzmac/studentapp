@@ -1,7 +1,11 @@
 import 'package:aug_prj/Utils/utils.dart';
 import 'package:aug_prj/design/form_design.dart';
+import 'package:aug_prj/repository/login_repository.dart';
+import 'package:aug_prj/screens/login_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import '../Utils/http_error.dart';
+import '../models/loginmodel.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -19,12 +23,28 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
     tabcontroller = TabController(length: 2, vsync: this);
     super.initState();
   }
+
   @override
   void dispose() {
     _emailcontroller.dispose();
     _passwordcontroller.dispose();
     super.dispose();
   }
+
+  Future<Map> createlogin() async {
+    try {
+      final loginmap = {
+        'username': _emailcontroller.text.trim(),
+        'password': _passwordcontroller.text.trim(),
+      };
+      final login = await LoginRepository.createlogin(loginmap);
+    } on HttpError catch (e) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(e.message)));
+    }
+    throw HttpError('ERRORR');
+  }
+
   Future signIn() async {
     try {
       final userCredential =
@@ -43,6 +63,7 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
       Utils.cupertinoBox(context, e.toString());
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -106,14 +127,16 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
   Container signin(String str) {
     return Container(
       alignment: Alignment.center,
-      decoration: BoxDecoration(border: Border.all(width: 2,color: Colors.black),borderRadius:BorderRadius.all(Radius.circular(20)) ),
+      decoration: BoxDecoration(
+          border: Border.all(width: 2, color: Colors.black),
+          borderRadius: const BorderRadius.all(Radius.circular(20))),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
         child:
             Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-           Text(
+          Text(
             '$str Account',
-            style:const TextStyle(fontSize: 30,color: Colors.purple),
+            style: const TextStyle(fontSize: 30, color: Colors.purple),
           ),
           FormDesign(
             labelText: 'Email',
@@ -127,7 +150,7 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
               onPressed: () {
                 signIn();
               },
-              child:  Text(str),
+              child: Text(str),
               style: ElevatedButton.styleFrom(
                   primary: const Color.fromARGB(255, 210, 82, 232),
                   textStyle: const TextStyle(
