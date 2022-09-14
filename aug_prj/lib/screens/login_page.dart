@@ -1,3 +1,4 @@
+import 'package:aug_prj/Utils/preference.dart';
 import 'package:aug_prj/Utils/utils.dart';
 import 'package:aug_prj/design/box_design.dart';
 import 'package:aug_prj/design/form_design.dart';
@@ -30,7 +31,8 @@ class _LoginPageState extends State<LoginPage> {
           password: _passwordcontroller.text.trim(),
         );
         if (FirebaseAuth.instance.currentUser != null) {
-          Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);
+          Navigator.of(context)
+              .pushNamedAndRemoveUntil('/home', (route) => false);
         }
       } on FirebaseAuthException catch (e) {
         Utils.cupertinoBox(context, e.message);
@@ -38,26 +40,12 @@ class _LoginPageState extends State<LoginPage> {
         Utils.cupertinoBox(context, e.toString());
       }
     }
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // Padding(
-            //   padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //     children: [
-            //       const CircleAvatar(
-            //         radius: 32,
-            //         backgroundColor: Color.fromARGB(255, 210, 82, 232),
-            //         child: Text('UN'),
-            //       ),
-            //       const Text(' User name'),
-            //       IconButton(onPressed: () {}, icon: const Icon(Icons.ac_unit))
-            //     ],
-            //   ),
-            // ),
             Image.network(
               'https://img.freepik.com/premium-vector/graphic-designer-creating-his-artwork-using-computer_80802-1077.jpg',
               fit: BoxFit.fitHeight,
@@ -89,6 +77,7 @@ class _LoginPageState extends State<LoginPage> {
                     ElevatedButton(
                         onPressed: () {
                           loginIn();
+                          Preference.instance.setEmail(_emailcontroller.text);
                         },
                         child: const Text('Log In'),
                         style: ElevatedButton.styleFrom(

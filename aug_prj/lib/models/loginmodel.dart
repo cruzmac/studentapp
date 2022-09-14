@@ -11,7 +11,7 @@ class LogIn {
     password = json['password'];
   }
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
+    final Map<String, dynamic> data ={};
     data['user_id'] = user_id;
     data['username'] = username;
     data['password'] = password;

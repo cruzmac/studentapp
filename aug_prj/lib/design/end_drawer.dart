@@ -1,21 +1,39 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-Drawer enddrawer(BuildContext context) {
+Drawer enddrawer(BuildContext context ,String? name ) {
   return Drawer(
-    backgroundColor: Colors.white24,
+    backgroundColor: Colors.black38,
     child: ListView(
       children: [
-        const DrawerHeader(
-          decoration: BoxDecoration(
-            color: Colors.black12,
+         DrawerHeader(
+          decoration:const  BoxDecoration(
+            color: Colors.black54,
           ),
-          child: SelectableText(
-            'Student App',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 30,
-            ),
+          child: Column(
+            children: [
+              const SelectableText( 
+                'Student App',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 30,
+                ),
+              ),
+              const SizedBox(height: 10,),
+              Row(
+                children: [
+                  const CircleAvatar( child: Text(''),radius: 25,backgroundColor: Colors.white,),
+                  const SizedBox(width: 8,),
+                  SelectableText( 
+                    name ?? '',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
         ListTile(

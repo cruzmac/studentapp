@@ -2,6 +2,8 @@ import 'package:aug_prj/design/end_drawer.dart';
 import 'package:aug_prj/models/list_model.dart';
 import 'package:flutter/material.dart';
 
+import '../Utils/preference.dart'; 
+
 class StudentDash extends StatefulWidget {
   const StudentDash({Key? key}) : super(key: key);
 
@@ -10,6 +12,13 @@ class StudentDash extends StatefulWidget {
 }
 
 class _StudentDashState extends State<StudentDash> {
+  String? name;
+  @override
+  void initState() {
+     super.initState();
+    name = Preference.instance.getEmail();
+   
+  }
   List<ListModel> list = [
     ListModel(
         name: 'Time Table', color: Colors.deepPurpleAccent, type: 'timetable'),
@@ -21,7 +30,7 @@ class _StudentDashState extends State<StudentDash> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      endDrawer: enddrawer(context),
+      endDrawer: enddrawer(context,name),
       appBar: AppBar(
         title: const Text('Student DashBoard'),
         centerTitle: true,

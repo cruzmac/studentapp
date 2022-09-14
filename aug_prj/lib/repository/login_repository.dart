@@ -110,6 +110,7 @@ class LoginRepository {
           },
           body: loginMap);
       if (response.statusCode >= 200 && response.statusCode < 300) {
+        final body = jsonDecode(response.body);
         print(response);
       } else {
         throw HttpError('ERROR');
