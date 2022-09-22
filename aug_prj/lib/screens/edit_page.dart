@@ -1,17 +1,16 @@
 
 import 'package:aug_prj/models/loginmodel.dart';
 import 'package:flutter/material.dart';
-
 import '../Utils/http_error.dart';
 import '../repository/login_repository.dart';
 
 class EditPostPage extends StatefulWidget {
   const EditPostPage({ 
     Key? key,
-    required this.login,
+     this.login,
   }) : super(key: key);
 
-  final LogIn login;
+  final LogIn? login;
 
   @override
   State<EditPostPage> createState() => _EditPostPageState();
@@ -24,19 +23,19 @@ class _EditPostPageState extends State<EditPostPage> {
   @override
   void initState() {
     super.initState();
-    usernameController = TextEditingController(text: widget.login.username);
-    passwordController = TextEditingController(text: widget.login.password);
+    usernameController = TextEditingController(text: widget.login?.firstname);
+    passwordController = TextEditingController(text: widget.login?.lastname);
   }
 
   Future<void> updatePost() async {
     final post = widget.login;
-    final id = post.user_id;
+    final id = post?.id;
     if (id == null) return;
 
     final updatedPost = LogIn(
-      username: usernameController.text,
-      password: passwordController.text,
-      user_id: post.user_id,
+      firstname: usernameController.text,
+      lastname: passwordController.text,
+      id:id,
     );
     try {
       final result = await LoginRepository.updateList(id, updatedPost);
@@ -68,8 +67,8 @@ class _EditPostPageState extends State<EditPostPage> {
                 maxLines: 2,
                 minLines: 1,
                 decoration: const InputDecoration(
-                  hintText: 'username',
-                  labelText: 'username',
+                  hintText: 'firstname',
+                  labelText: 'firstname',
                   border: OutlineInputBorder(),
                   contentPadding: EdgeInsets.all(10),
                 ),
@@ -82,8 +81,8 @@ class _EditPostPageState extends State<EditPostPage> {
                 maxLines: 5,
                 minLines: 1,
                 decoration: const InputDecoration(
-                  hintText: 'password',
-                  labelText: 'password',
+                  hintText: 'lastname',
+                  labelText: 'lastname',
                   border: OutlineInputBorder(),
                 ),
               ),

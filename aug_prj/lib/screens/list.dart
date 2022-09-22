@@ -32,10 +32,9 @@ class _AcctListState extends State<AcctList> {
 
   Future<void> onTapLogin(LogIn login) async {
     final result =
-         await Navigator.of(context).pushNamed('/acctlist', arguments: login);
+        await Navigator.of(context).pushNamed('/editpost', arguments: login);
     if (result is LogIn) {
-      final index =
-          loginlist.indexWhere((element) => element.user_id == login.user_id);
+      final index = loginlist.indexWhere((element) => element.id == login.id);
       if (index != -1) {
         setState(() {
           loginlist[index] = result;
@@ -45,12 +44,12 @@ class _AcctListState extends State<AcctList> {
   }
 
   Future<void> deletePost(LogIn login) async {
-    final id = login.user_id;
+    final id = login.id;
     if (id == null) return;
     try {
       await LoginRepository.deleteAcct(id);
       setState(() {
-        loginlist.removeWhere((element) => element.user_id == login.user_id);
+        loginlist.removeWhere((element) => element.id == login.id);
       });
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -112,17 +111,23 @@ class _AcctListState extends State<AcctList> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '${login.user_id}',
-                          style: const TextStyle(fontSize: 22),
+                          '${login.firstname}',
+                          style: const TextStyle(fontSize: 15),
                         ),
                         Text(
-                          '${login.username}',
+                          '${login.lastname}',
+                          style: const TextStyle(fontSize: 15),
+                        ),
+                        Text(
+                          '${login.location}',
                           style: const TextStyle(fontSize: 15),
                         ),
                       ],
                     )),
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        deletePost(login);
+                      },
                       icon: const Icon(
                         Icons.delete_outline,
                         color: Colors.red,

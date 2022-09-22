@@ -26,6 +26,29 @@ class _HomePageState extends State<HomePage> {
         title: const Text('DashBoard'),
         centerTitle: true,
       ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          ShaderMask(
+            shaderCallback: ((bounds) =>const LinearGradient(
+                  colors: [
+                    Colors.blue,
+                    Color.fromARGB(255, 86, 186, 213),
+                    Color.fromARGB(255, 17, 252, 252),
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ).createShader(bounds)),
+            child: const Text(
+              ' Hi Every One',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 50,
+                  fontWeight: FontWeight.bold),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

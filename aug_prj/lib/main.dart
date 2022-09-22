@@ -1,3 +1,5 @@
+import 'package:aug_prj/models/loginmodel.dart';
+import 'package:aug_prj/screens/edit_page.dart';
 import 'package:aug_prj/screens/events.dart';
 import 'package:aug_prj/screens/home_page.dart';
 import 'package:aug_prj/screens/list.dart';
@@ -68,6 +70,11 @@ Route<dynamic>? pageroutes(RouteSettings settings) {
       return (MaterialPageRoute(
           settings: settings,
           builder: (BuildContext context) => const AcctList()));
+    case '/editpost':
+    final login = settings.arguments as LogIn;
+      return (MaterialPageRoute(
+          settings: settings,
+          builder: (BuildContext context) => EditPostPage(login: login,)));
     default:
   }
   return null;

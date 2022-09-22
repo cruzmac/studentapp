@@ -1,20 +1,23 @@
 class LogIn {
-  int? user_id;
-  String? username;
-  String? password;
+  int? id;
+  String? firstname;
+  String? lastname;
+  String? location;
 
-  LogIn({this.user_id, this.username, this.password});
+  LogIn({this.id, this.firstname, this.lastname, this.location});
 
   LogIn.fromJson(Map<String, dynamic> json) {
-    user_id = json['user_id'];
-    password = json['username'];
-    password = json['password'];
+    id = json['id'];
+    firstname = json['firstname'];
+    lastname = json['lastname'];
+    location = json['location'];
   }
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data ={};
-    data['user_id'] = user_id;
-    data['username'] = username;
-    data['password'] = password;
+    final Map<String, dynamic> data = {};
+    data['id'] = id;
+    data['firstname'] = firstname;
+    data['lastname'] = lastname;
+    data['location'] = location;
     return data;
   }
 }

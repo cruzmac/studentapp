@@ -15,8 +15,9 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
-  final TextEditingController _emailcontroller = TextEditingController();
-  final TextEditingController _passwordcontroller = TextEditingController();
+  final TextEditingController _firstnamecontroller = TextEditingController();
+  final TextEditingController _lastnamecontroller = TextEditingController();
+  final TextEditingController _locationcontroller = TextEditingController();
   late final TabController tabcontroller;
   @override
   void initState() {
@@ -26,16 +27,18 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
 
   @override
   void dispose() {
-    _emailcontroller.dispose();
-    _passwordcontroller.dispose();
+    _firstnamecontroller.dispose();
+    _lastnamecontroller.dispose();
+    _locationcontroller.dispose();
     super.dispose();
   }
 
   Future<Map> createlogin() async {
     try {
       final loginmap = {
-        'username': _emailcontroller.text.trim(),
-        'password': _passwordcontroller.text.trim(),
+        'firstname': _firstnamecontroller.text.trim(),
+        'lastname': _lastnamecontroller.text.trim(),
+        'location': _locationcontroller.text.trim(),
       };
       final login = await LoginRepository.createlogin(loginmap);
     } on HttpError catch (e) {
@@ -49,8 +52,8 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
     try {
       final userCredential =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: _emailcontroller.text.trim(),
-        password: _passwordcontroller.text.trim(),
+        email: _firstnamecontroller.text.trim(),
+        password: _lastnamecontroller.text.trim(),
       );
       if (userCredential.user != null) {
         Navigator.of(context)
@@ -139,16 +142,20 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
             style: const TextStyle(fontSize: 30, color: Colors.purple),
           ),
           FormDesign(
-            labelText: 'Email',
-            controller: _emailcontroller,
+            labelText: 'First name',
+            controller: _firstnamecontroller,
           ),
           FormDesign(
-            labelText: 'Password',
-            controller: _passwordcontroller,
+            labelText: 'Last name',
+            controller: _lastnamecontroller,
+          ),
+          FormDesign(
+            labelText: 'Location',
+            controller: _locationcontroller,
           ),
           ElevatedButton(
               onPressed: () {
-                signIn();
+                createlogin();
               },
               child: Text(str),
               style: ElevatedButton.styleFrom(

@@ -1,12 +1,11 @@
 import 'dart:ffi';
-
 import 'package:aug_prj/Utils/http_error.dart';
 import 'package:aug_prj/models/loginmodel.dart';
 import 'package:http/http.dart';
 import 'dart:convert';
 
 class LoginRepository {
-  static const baseurl = 'https://odooformybusiness.com/flutter/';
+  static const baseurl = 'https://flutter.odooformybusiness.com';
 
   static Uri uri(String path) {
     return Uri.parse('$baseurl/$path');
@@ -14,7 +13,7 @@ class LoginRepository {
 
   Future<List<LogIn>> fetchposts() async {
     try {
-      final url = uri('');
+      final url = uri('users');
       final response = await get(url);
       if (response.statusCode >= 200 && response.statusCode < 300) {
         final body = jsonDecode(response.body);
@@ -25,7 +24,7 @@ class LoginRepository {
           return [];
         }
       } else {
-        throw HttpError('ERROR');
+        throw HttpError('ERROR is made');
       }
     } catch (e) {
       throw HttpError(e.toString());
@@ -34,7 +33,7 @@ class LoginRepository {
 
   Future<LogIn> fetchpost(int id) async {
     try {
-      final url = uri('/$id');
+      final url = uri('users/$id');
       final response = await get(url);
       if (response.statusCode >= 200 && response.statusCode < 300) {
         final body = jsonDecode(response.body);
@@ -53,17 +52,18 @@ class LoginRepository {
     }
   }
 
-  static Future deleteAcct(int id) async {
+  static Future<void> deleteAcct(int id) async {
     try {
-      final url = uri('/$id');
+      final url = uri('users/$id');
       final response = await delete(url);
       if (response.statusCode >= 200 && response.statusCode < 300) {
-        final body = jsonDecode(response.body);
+        final body = response.body;
+        print(body);
       } else {
-        throw HttpError('ERROR');
+        throw HttpError('ERROR is 1');
       }
     } catch (e) {
-      throw HttpError('ERROR');
+      throw HttpError('ERROR is 2');
     }
   }
 
@@ -71,8 +71,8 @@ class LoginRepository {
     try {
       final url = uri('/$id');
       final loginMap = {
-        'username': login.username,
-        'password': login.password,
+        'firstname': login.firstname,
+        'lastname': login.lastname,
       };
       final response = await patch(url,
           headers: {
@@ -100,9 +100,9 @@ class LoginRepository {
     }
   }
 
-  static Future createlogin(Map loginMap) async {
+  static Future createlogin(Map<String,String> loginMap) async {
     try {
-      final url = uri('');
+      final url = uri('users');
       final response = await post(url,
           headers: {
             'Content-type': 'application/json',
@@ -110,8 +110,8 @@ class LoginRepository {
           },
           body: loginMap);
       if (response.statusCode >= 200 && response.statusCode < 300) {
-        final body = jsonDecode(response.body);
-        print(response);
+        final body = response.body;
+        print(body);
       } else {
         throw HttpError('ERROR');
       }
