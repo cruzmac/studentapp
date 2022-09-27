@@ -1,11 +1,9 @@
 import 'package:aug_prj/Utils/utils.dart';
 import 'package:aug_prj/design/form_design.dart';
 import 'package:aug_prj/repository/login_repository.dart';
-import 'package:aug_prj/screens/login_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../Utils/http_error.dart';
-import '../models/loginmodel.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -18,6 +16,7 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
   final TextEditingController _firstnamecontroller = TextEditingController();
   final TextEditingController _lastnamecontroller = TextEditingController();
   final TextEditingController _locationcontroller = TextEditingController();
+  final TextEditingController _registercontroller = TextEditingController();
   late final TabController tabcontroller;
   @override
   void initState() {
@@ -30,12 +29,14 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
     _firstnamecontroller.dispose();
     _lastnamecontroller.dispose();
     _locationcontroller.dispose();
+    _registercontroller.dispose();
     super.dispose();
   }
 
   Future<Map> createlogin() async {
     try {
       final loginmap = {
+        'id': int.tryParse(_registercontroller.text.trim()),
         'firstname': _firstnamecontroller.text.trim(),
         'lastname': _lastnamecontroller.text.trim(),
         'location': _locationcontroller.text.trim(),
@@ -140,6 +141,10 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
           Text(
             '$str Account',
             style: const TextStyle(fontSize: 30, color: Colors.purple),
+          ),
+          FormDesign(
+            labelText: 'Register No',
+            controller: _registercontroller,
           ),
           FormDesign(
             labelText: 'First name',

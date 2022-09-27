@@ -27,13 +27,12 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           ShaderMask(
-            shaderCallback: ((bounds) =>const LinearGradient(
+            shaderCallback: ((bounds) => const LinearGradient(
                   colors: [
                     Colors.blue,
-                    Color.fromARGB(255, 86, 186, 213),
+                    Color.fromARGB(255, 38, 123, 180),
                     Color.fromARGB(255, 17, 252, 252),
                   ],
                   begin: Alignment.topLeft,

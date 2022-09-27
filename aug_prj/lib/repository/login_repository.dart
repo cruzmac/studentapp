@@ -13,7 +13,7 @@ class LoginRepository {
 
   Future<List<LogIn>> fetchposts() async {
     try {
-      final url = uri('users');
+      final url = uri('students');
       final response = await get(url);
       if (response.statusCode >= 200 && response.statusCode < 300) {
         final body = jsonDecode(response.body);
@@ -54,7 +54,7 @@ class LoginRepository {
 
   static Future<void> deleteAcct(int id) async {
     try {
-      final url = uri('users/$id');
+      final url = uri('students/$id');
       final response = await delete(url);
       if (response.statusCode >= 200 && response.statusCode < 300) {
         final body = response.body;
@@ -74,7 +74,7 @@ class LoginRepository {
         'firstname': login.firstname,
         'lastname': login.lastname,
       };
-      final response = await patch(url,
+      final response = await put(url,
           headers: {
             'Content-type': 'application/json',
           },
@@ -100,15 +100,10 @@ class LoginRepository {
     }
   }
 
-  static Future createlogin(Map<String,String> loginMap) async {
+  static Future createlogin(Map<String, dynamic> loginMap) async {
     try {
-      final url = uri('users');
-      final response = await post(url,
-          headers: {
-            'Content-type': 'application/json',
-            'Accept': 'application/json',
-          },
-          body: loginMap);
+      final url = uri('students');
+      final response = await post(url, body: jsonEncode(loginMap));
       if (response.statusCode >= 200 && response.statusCode < 300) {
         final body = response.body;
         print(body);
