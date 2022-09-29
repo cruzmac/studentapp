@@ -1,4 +1,5 @@
 import 'dart:ffi';
+import 'dart:io';
 import 'package:aug_prj/Utils/http_error.dart';
 import 'package:aug_prj/models/loginmodel.dart';
 import 'package:http/http.dart';
@@ -13,7 +14,7 @@ class LoginRepository {
 
   Future<List<LogIn>> fetchposts() async {
     try {
-      final url = uri('students');
+      final url = uri('users');
       final response = await get(url);
       if (response.statusCode >= 200 && response.statusCode < 300) {
         final body = jsonDecode(response.body);
@@ -52,9 +53,9 @@ class LoginRepository {
     }
   }
 
-  static Future<void> deleteAcct(int id) async {
+  static Future<void> deleteAcct(String id) async {
     try {
-      final url = uri('students/$id');
+      final url = uri('users/$id');
       final response = await delete(url);
       if (response.statusCode >= 200 && response.statusCode < 300) {
         final body = response.body;
@@ -67,16 +68,18 @@ class LoginRepository {
     }
   }
 
-  static Future updateList(int id, LogIn login) async {
+  static Future updateList(String id, LogIn login) async {
     try {
-      final url = uri('/$id');
+      final url = uri('users/$id');
       final loginMap = {
+        'id':id,
         'firstname': login.firstname,
         'lastname': login.lastname,
+        'location': login.location,
       };
       final response = await put(url,
           headers: {
-            'Content-type': 'application/json',
+            'Content-Type': 'application/json',
           },
           body: jsonEncode(loginMap));
       if (response.statusCode >= 200 && response.statusCode < 300) {
@@ -102,8 +105,10 @@ class LoginRepository {
 
   static Future createlogin(Map<String, dynamic> loginMap) async {
     try {
-      final url = uri('students');
-      final response = await post(url, body: jsonEncode(loginMap));
+      final url = uri('users');
+      final response = await post(url,headers: {
+        'Content-Type':'application/json'
+      }, body: jsonEncode(loginMap));
       if (response.statusCode >= 200 && response.statusCode < 300) {
         final body = response.body;
         print(body);

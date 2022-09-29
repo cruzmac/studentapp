@@ -3,6 +3,7 @@ import 'package:aug_prj/design/form_design.dart';
 import 'package:aug_prj/repository/login_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import '../Utils/http_error.dart';
 
 class SignUp extends StatefulWidget {
@@ -36,7 +37,7 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
   Future<Map> createlogin() async {
     try {
       final loginmap = {
-        'id': int.tryParse(_registercontroller.text.trim()),
+        'id': _registercontroller.text.trim(),
         'firstname': _firstnamecontroller.text.trim(),
         'lastname': _lastnamecontroller.text.trim(),
         'location': _locationcontroller.text.trim(),
@@ -170,5 +171,14 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
         ]),
       ),
     );
+  }
+
+  void postData() async {
+    try {
+      final response = await post(
+          Uri.parse('https://flutter.odooformybusiness.com/users'),
+          body: {"id": "2145", "firstname": "ambur1ose", "lastname": "mac1hado","location":"tuty1123"});
+      print(response.body);
+    } catch (e) {}
   }
 }

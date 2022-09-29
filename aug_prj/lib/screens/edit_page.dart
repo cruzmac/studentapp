@@ -34,6 +34,7 @@ class _EditPostPageState extends State<EditPostPage> {
     final updatedPost = LogIn(
       firstname: usernameController.text,
       lastname: passwordController.text,
+      location: widget.login?.location,
       id:id,
     );
     try {
