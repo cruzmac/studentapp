@@ -31,6 +31,8 @@ class _LoginPageState extends State<LoginPage> {
           password: _passwordcontroller.text.trim(),
         );
         if (FirebaseAuth.instance.currentUser != null) {
+          await Preference.instance.setEmail(_emailcontroller.text);
+          print(Preference.instance.getEmail());
           Navigator.of(context)
               .pushNamedAndRemoveUntil('/home', (route) => false);
         }
@@ -77,7 +79,6 @@ class _LoginPageState extends State<LoginPage> {
                     ElevatedButton(
                         onPressed: () {
                           loginIn();
-                          Preference.instance.setEmail(_emailcontroller.text);
                         },
                         child: const Text('Log In'),
                         style: ElevatedButton.styleFrom(

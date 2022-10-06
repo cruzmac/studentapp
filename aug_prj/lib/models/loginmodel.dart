@@ -1,5 +1,5 @@
 class LogIn {
-  String? id;
+  int? id;
   String? firstname;
   String? lastname;
   String? location;

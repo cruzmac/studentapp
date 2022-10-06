@@ -6,11 +6,11 @@ class Preference {
   SharedPreferences? _preferences;
 
   Preference._() {
-    _initPreference();
+    initPreference();
   }
 
   /// Initializes the preference
-  Future<void> _initPreference() async {
+  Future<void> initPreference() async {
     _preferences = await SharedPreferences.getInstance();
   }
 
@@ -18,7 +18,7 @@ class Preference {
   /// [email] email that need to be saved in the shared preferences
   Future<bool>? setEmail(String email) async {
     if (_preferences == null) {
-      await _initPreference();
+      await initPreference();
     }
     return await _preferences?.setString(
           PreferenceKey.PASSWORD,

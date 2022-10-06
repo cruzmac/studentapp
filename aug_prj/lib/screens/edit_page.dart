@@ -29,17 +29,36 @@ class _EditPostPageState extends State<EditPostPage> {
   Future<void> updatePost() async {
     final post = widget.login;
     final id = post?.id;
-    if (id == null) return;
+    if (id == null) return; 
 
     final updatedPost = LogIn(
       firstname: usernameController.text,
       lastname: passwordController.text,
       location: widget.login?.location,
-      id:id,
+      id:post?.id,
     );
     try {
       final result = await LoginRepository.updateList(id, updatedPost);
-      print(result.toJson());
+      print(result);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          elevation: 0,
+          backgroundColor: Colors.green,
+          behavior: SnackBarBehavior.floating,
+          content: Row(
+            children: const [
+              Icon(
+                Icons.check_circle,
+                color: Colors.white,
+              ),
+              SizedBox(width: 10),
+              Text(
+                'Post Updated successfully',
+              ),
+            ],
+          ),
+        ),
+      );
       Navigator.pop(context, result);
     } on HttpError catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(

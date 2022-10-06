@@ -53,7 +53,7 @@ class LoginRepository {
     }
   }
 
-  static Future<void> deleteAcct(String id) async {
+  static Future<void> deleteAcct(int id) async {
     try {
       final url = uri('users/$id');
       final response = await delete(url);
@@ -68,7 +68,7 @@ class LoginRepository {
     }
   }
 
-  static Future updateList(String id, LogIn login) async {
+  static Future updateList(int id, LogIn login) async {
     try {
       final url = uri('users/$id');
       final loginMap = {
@@ -83,17 +83,10 @@ class LoginRepository {
           },
           body: jsonEncode(loginMap));
       if (response.statusCode >= 200 && response.statusCode < 300) {
-        final body = jsonDecode(response.body);
-        if (body is Map) {
-          final json = Map<String, dynamic>.from(body);
-          final login = LogIn.fromJson(json);
-          return login;
-        } else {
-          return LogIn();
-        }
+        final body = response.body;
       } else {
         throw HttpError(
-          'Something went wrong. Please try again after some time',
+          'Something went wrong1',
         );
       }
     } catch (e) {

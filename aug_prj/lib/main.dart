@@ -1,3 +1,4 @@
+import 'package:aug_prj/Utils/preference.dart';
 import 'package:aug_prj/models/loginmodel.dart';
 import 'package:aug_prj/screens/edit_page.dart';
 import 'package:aug_prj/screens/events.dart';
@@ -14,6 +15,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Preference.instance.initPreference();
   await Firebase.initializeApp();
   runApp(const MyApp());
 }
@@ -71,10 +73,12 @@ Route<dynamic>? pageroutes(RouteSettings settings) {
           settings: settings,
           builder: (BuildContext context) => const AcctList()));
     case '/editpost':
-    final login = settings.arguments as LogIn;
+      final login = settings.arguments as LogIn;
       return (MaterialPageRoute(
           settings: settings,
-          builder: (BuildContext context) => EditPostPage(login: login,)));
+          builder: (BuildContext context) => EditPostPage(
+                login: login,
+              )));
     default:
   }
   return null;
