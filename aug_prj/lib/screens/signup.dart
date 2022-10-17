@@ -43,6 +43,25 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
         'location': _locationcontroller.text.trim(),
       };
       final login = await LoginRepository.createlogin(loginmap);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          elevation: 0,
+          backgroundColor: Colors.green,
+          behavior: SnackBarBehavior.floating,
+          content: Row(
+            children: const [
+              Icon(
+                Icons.check_circle,
+                color: Colors.white,
+              ),
+              SizedBox(width: 10),
+              Text(
+                'Post created successfully',
+              ),
+            ],
+          ),
+        ),
+      );
     } on HttpError catch (e) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(e.message)));
@@ -177,7 +196,12 @@ class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
     try {
       final response = await post(
           Uri.parse('https://flutter.odooformybusiness.com/users'),
-          body: {"id": "2145", "firstname": "ambur1ose", "lastname": "mac1hado","location":"tuty1123"});
+          body: {
+            "id": "2145",
+            "firstname": "ambur1ose",
+            "lastname": "mac1hado",
+            "location": "tuty1123"
+          });
       print(response.body);
     } catch (e) {}
   }

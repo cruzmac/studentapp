@@ -1,5 +1,7 @@
 import 'package:aug_prj/Utils/preference.dart';
+import 'package:aug_prj/authentication.dart';
 import 'package:aug_prj/models/loginmodel.dart';
+import 'package:aug_prj/repository/googlesignin.dart';
 import 'package:aug_prj/screens/edit_page.dart';
 import 'package:aug_prj/screens/events.dart';
 import 'package:aug_prj/screens/home_page.dart';
@@ -12,6 +14,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,22 +25,24 @@ Future<void> main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        // textTheme: GoogleFonts.lobsterTextTheme(Theme.of(context).textTheme),
-        fontFamily: GoogleFonts.lato().fontFamily,
-        appBarTheme: const AppBarTheme(backgroundColor: Colors.black12),
+  Widget build(BuildContext context) => ChangeNotifierProvider(
+    create: (context)=> GoogleSignInProvider(),
+    child: MaterialApp(
+          title: 'Flutter Demo',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            // textTheme: GoogleFonts.lobsterTextTheme(Theme.of(context).textTheme),
+            fontFamily: GoogleFonts.lato().fontFamily,
+            appBarTheme: const AppBarTheme(backgroundColor: Colors.black12),
+          ),
+          home: const AuthService(),
+          onGenerateRoute: pageroutes,
+        
       ),
-      initialRoute: '/',
-      onGenerateRoute: pageroutes,
-    );
-  }
+  );
+  
 }
 
 Route<dynamic>? pageroutes(RouteSettings settings) {

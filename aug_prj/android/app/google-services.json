@@ -1,33 +1,41 @@
 {
   "project_info": {
-    "project_number": "406821488839",
-    "project_id": "studentprj-5c98e",
-    "storage_bucket": "studentprj-5c98e.appspot.com"
+    "project_number": "250803146864",
+    "project_id": "studentapplogin-25372",
+    "storage_bucket": "studentapplogin-25372.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:406821488839:android:1a5a67e5d20feff2c9d6e2",
+        "mobilesdk_app_id": "1:250803146864:android:85979a4a69742ab93ce4b5",
         "android_client_info": {
           "package_name": "com.example.aug_prj"
         }
       },
       "oauth_client": [
         {
-          "client_id": "406821488839-0kgoc2l37fjbav1mj26ampgqh62panai.apps.googleusercontent.com",
+          "client_id": "250803146864-ilcm5bu8o8se4l691vukmhp3bfrk5eh7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.aug_prj",
+            "certificate_hash": "b9a1a28be3c09ecd8ed44cd40166ea9ff986ac71"
+          }
+        },
+        {
+          "client_id": "250803146864-l1ttks9ijcku6tvbm2o9qm9k9it7k37p.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAYiZvzPZWOa8PBYNHwy9Tebib1YR67d6w"
+          "current_key": "AIzaSyCGRU8PFV5DKAh78Deg032kFD6ryF6FWOM"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "406821488839-0kgoc2l37fjbav1mj26ampgqh62panai.apps.googleusercontent.com",
+              "client_id": "250803146864-l1ttks9ijcku6tvbm2o9qm9k9it7k37p.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

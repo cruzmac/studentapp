@@ -72,7 +72,7 @@ class LoginRepository {
     try {
       final url = uri('users/$id');
       final loginMap = {
-        'id':id,
+        'id': id,
         'firstname': login.firstname,
         'lastname': login.lastname,
         'location': login.location,
@@ -99,9 +99,9 @@ class LoginRepository {
   static Future createlogin(Map<String, dynamic> loginMap) async {
     try {
       final url = uri('users');
-      final response = await post(url,headers: {
-        'Content-Type':'application/json'
-      }, body: jsonEncode(loginMap));
+      final response = await post(url,
+          headers: {'Content-Type': 'application/json'},
+          body: jsonEncode(loginMap));
       if (response.statusCode >= 200 && response.statusCode < 300) {
         final body = response.body;
         print(body);

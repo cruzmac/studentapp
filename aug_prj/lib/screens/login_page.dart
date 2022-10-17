@@ -2,8 +2,12 @@ import 'package:aug_prj/Utils/preference.dart';
 import 'package:aug_prj/Utils/utils.dart';
 import 'package:aug_prj/design/box_design.dart';
 import 'package:aug_prj/design/form_design.dart';
+import 'package:aug_prj/repository/googlesignin.dart';
+import 'package:aug_prj/screens/home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -33,6 +37,28 @@ class _LoginPageState extends State<LoginPage> {
         if (FirebaseAuth.instance.currentUser != null) {
           await Preference.instance.setEmail(_emailcontroller.text);
           print(Preference.instance.getEmail());
+          Navigator.of(context)
+              .pushNamedAndRemoveUntil('/home', (route) => false);
+        }
+      } on FirebaseAuthException catch (e) {
+        Utils.cupertinoBox(context, e.message);
+      } on Exception catch (e) {
+        Utils.cupertinoBox(context, e.toString());
+      }
+    }
+
+    signInWithGoogle() async {
+      final GoogleSignInAccount? googleuser =
+          await GoogleSignIn(scopes: <String>['email']).signIn();
+      final GoogleSignInAuthentication googleAuth =
+          await googleuser!.authentication;
+      final credential = GoogleAuthProvider.credential(
+        idToken: googleAuth.idToken,
+        accessToken: googleAuth.accessToken,
+      );
+      try {
+        await FirebaseAuth.instance.signInWithCredential(credential);
+        if (FirebaseAuth.instance.currentUser != null) {
           Navigator.of(context)
               .pushNamedAndRemoveUntil('/home', (route) => false);
         }
@@ -85,9 +111,24 @@ class _LoginPageState extends State<LoginPage> {
                             primary: const Color.fromARGB(255, 210, 82, 232),
                             textStyle: const TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.w400))),
+                    GestureDetector(
+                        onTap: () {
+                          final provider = Provider.of<GoogleSignInProvider>(
+                              context,
+                              listen: false);
+                          provider.googleLogin(context);
+                        },
+                        child: CircleAvatar(
+                          radius: 30,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(28),
+                            child: Image.asset("assets/google.png"),
+                          ),
+                          backgroundColor: Colors.black,
+                        )),
                   ],
                 ),
-                height: 240,
+                height: 350,
                 width: 300,
                 decoration: AppTheme.design,
               ),
