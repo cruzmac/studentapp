@@ -3,7 +3,6 @@ import 'package:aug_prj/Utils/utils.dart';
 import 'package:aug_prj/design/box_design.dart';
 import 'package:aug_prj/design/form_design.dart';
 import 'package:aug_prj/repository/googlesignin.dart';
-import 'package:aug_prj/screens/home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -47,27 +46,27 @@ class _LoginPageState extends State<LoginPage> {
       }
     }
 
-    signInWithGoogle() async {
-      final GoogleSignInAccount? googleuser =
-          await GoogleSignIn(scopes: <String>['email']).signIn();
-      final GoogleSignInAuthentication googleAuth =
-          await googleuser!.authentication;
-      final credential = GoogleAuthProvider.credential(
-        idToken: googleAuth.idToken,
-        accessToken: googleAuth.accessToken,
-      );
-      try {
-        await FirebaseAuth.instance.signInWithCredential(credential);
-        if (FirebaseAuth.instance.currentUser != null) {
-          Navigator.of(context)
-              .pushNamedAndRemoveUntil('/home', (route) => false);
-        }
-      } on FirebaseAuthException catch (e) {
-        Utils.cupertinoBox(context, e.message);
-      } on Exception catch (e) {
-        Utils.cupertinoBox(context, e.toString());
-      }
-    }
+    // signInWithGoogle() async {
+    //   final GoogleSignInAccount? googleuser =
+    //       await GoogleSignIn(scopes: <String>['email']).signIn();
+    //   final GoogleSignInAuthentication googleAuth =
+    //       await googleuser!.authentication;
+    //   final credential = GoogleAuthProvider.credential(
+    //     idToken: googleAuth.idToken,
+    //     accessToken: googleAuth.accessToken,
+    //   );
+    //   try {
+    //     await FirebaseAuth.instance.signInWithCredential(credential);
+    //     if (FirebaseAuth.instance.currentUser != null) {
+    //       Navigator.of(context)
+    //           .pushNamedAndRemoveUntil('/home', (route) => false);
+    //     }
+    //   } on FirebaseAuthException catch (e) {
+    //     Utils.cupertinoBox(context, e.message);
+    //   } on Exception catch (e) {
+    //     Utils.cupertinoBox(context, e.toString());
+    //   }
+    // }
 
     return Scaffold(
       backgroundColor: Colors.white,

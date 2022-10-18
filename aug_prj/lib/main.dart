@@ -41,8 +41,7 @@ class MyApp extends StatelessWidget {
           onGenerateRoute: pageroutes,
         
       ),
-  );
-  
+  );  
 }
 
 Route<dynamic>? pageroutes(RouteSettings settings) {
