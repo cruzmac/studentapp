@@ -2,11 +2,11 @@ import 'package:aug_prj/Utils/preference.dart';
 import 'package:aug_prj/Utils/utils.dart';
 import 'package:aug_prj/design/box_design.dart';
 import 'package:aug_prj/design/form_design.dart';
+import 'package:aug_prj/repository/googlebutton.dart';
 import 'package:aug_prj/repository/googlesignin.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -110,21 +110,19 @@ class _LoginPageState extends State<LoginPage> {
                             primary: const Color.fromARGB(255, 210, 82, 232),
                             textStyle: const TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.w400))),
-                    GestureDetector(
-                        onTap: () {
-                          final provider = Provider.of<GoogleSignInProvider>(
-                              context,
-                              listen: false);
-                          provider.googleLogin(context);
-                        },
-                        child: CircleAvatar(
-                          radius: 30,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(28),
-                            child: Image.asset("assets/google.png"),
-                          ),
-                          backgroundColor: Colors.black,
-                        )),
+                    // GestureDetector(
+                    //     onTap: () {
+
+                    //      },
+                    //     child: CircleAvatar(
+                    //       radius: 30,
+                    //       child: ClipRRect(
+                    //         borderRadius: BorderRadius.circular(28),
+                    //         child: Image.asset("assets/google.png"),
+                    //       ),
+                    //       backgroundColor: Colors.black,
+                    //     )),
+                    const GoogleSignInButton(),
                   ],
                 ),
                 height: 350,
