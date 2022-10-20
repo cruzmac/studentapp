@@ -1,10 +1,9 @@
 import 'package:aug_prj/Utils/preference.dart';
 import 'package:aug_prj/authentication.dart';
 import 'package:aug_prj/models/loginmodel.dart';
-import 'package:aug_prj/repository/googlesignin.dart';
 import 'package:aug_prj/screens/edit_page.dart';
 import 'package:aug_prj/screens/events.dart';
-import 'package:aug_prj/screens/home_page.dart';
+import 'package:aug_prj/screens/home_page.dart'; 
 import 'package:aug_prj/screens/list.dart';
 import 'package:aug_prj/screens/login_page.dart';
 import 'package:aug_prj/screens/signup.dart';

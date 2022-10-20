@@ -1,3 +1,4 @@
+import 'package:aug_prj/repository/googlesignin.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +13,7 @@ Drawer enddrawer(BuildContext context, String? name) {
               Colors.blue,
               Color.fromARGB(255, 214, 55, 254),
               Color.fromARGB(255, 244, 253, 66),
-            ],begin: Alignment.bottomLeft,end: Alignment.topRight),
+            ], begin: Alignment.bottomLeft, end: Alignment.topRight),
           ),
           child: Column(
             children: [
@@ -89,7 +90,7 @@ Drawer enddrawer(BuildContext context, String? name) {
             color: Colors.white,
           ),
           onTap: () async {
-            await FirebaseAuth.instance.signOut();
+            Authentication().signOut();
             Navigator.pop(context);
             Navigator.of(context)
                 .pushNamedAndRemoveUntil('/', (route) => false);

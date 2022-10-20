@@ -1,15 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class Authentication {
-  static Future<User?> signInWithGoogle({required BuildContext context}) async {
-    FirebaseAuth auth = FirebaseAuth.instance;
+  final auth = FirebaseAuth.instance;
+  final googleSignIn = GoogleSignIn();
+  Future<User?> signInWithGoogle({required BuildContext context}) async {
     User? user;
-
-    final GoogleSignIn googleSignIn = GoogleSignIn();
-
     final GoogleSignInAccount? googleSignInAccount =
         await googleSignIn.signIn();
 
@@ -50,8 +47,12 @@ class Authentication {
         );
       }
     }
-
     return user;
+  }
+
+  signOut() async {
+  await auth.signOut();
+   await googleSignIn.signOut();
   }
 
   static SnackBar customSnackBar({required String content}) {
@@ -59,7 +60,7 @@ class Authentication {
       backgroundColor: Colors.black,
       content: Text(
         content,
-        style: TextStyle(color: Colors.redAccent, letterSpacing: 0.5),
+        style: const TextStyle(color: Colors.redAccent, letterSpacing: 0.5),
       ),
     );
   }

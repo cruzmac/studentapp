@@ -1,5 +1,6 @@
 import 'package:aug_prj/Utils/preference.dart';
 import 'package:aug_prj/Utils/utils.dart';
+import 'package:aug_prj/authentication.dart';
 import 'package:aug_prj/design/box_design.dart';
 import 'package:aug_prj/design/form_design.dart';
 import 'package:aug_prj/repository/googlebutton.dart';
@@ -110,19 +111,18 @@ class _LoginPageState extends State<LoginPage> {
                             primary: const Color.fromARGB(255, 210, 82, 232),
                             textStyle: const TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.w400))),
-                    // GestureDetector(
-                    //     onTap: () {
-
-                    //      },
-                    //     child: CircleAvatar(
-                    //       radius: 30,
-                    //       child: ClipRRect(
-                    //         borderRadius: BorderRadius.circular(28),
-                    //         child: Image.asset("assets/google.png"),
-                    //       ),
-                    //       backgroundColor: Colors.black,
-                    //     )),
-                    const GoogleSignInButton(),
+                    GestureDetector(
+                        onTap: () {
+                          Authentication().signInWithGoogle(context: context);
+                        },
+                        child: CircleAvatar(
+                          radius: 30,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(28),
+                            child: Image.asset("assets/google.png"),
+                          ),
+                          backgroundColor: Colors.black,
+                        )),
                   ],
                 ),
                 height: 350,
