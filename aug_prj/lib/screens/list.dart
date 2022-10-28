@@ -45,7 +45,7 @@ class _AcctListState extends State<AcctList> {
 
   Future<void> deletePost(LogIn login) async {
     final id = login.id;
-    if (id == null) return;
+    if (id == null) return; 
     try {
       await LoginRepository.deleteAcct(id);
       setState(() {

@@ -2,6 +2,8 @@ import 'package:aug_prj/repository/googlesignin.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+class EndDrawer{
+ final user = FirebaseAuth.instance.currentUser;
 Drawer enddrawer(BuildContext context, String? name) {
   return Drawer(
     backgroundColor: Colors.black38,
@@ -29,20 +31,32 @@ Drawer enddrawer(BuildContext context, String? name) {
               ),
               Row(
                 children: [
-                  const CircleAvatar(
-                    child: Text(''),
+                   CircleAvatar(
+                    backgroundImage: NetworkImage(user!.photoURL!),
                     radius: 25,
                     backgroundColor: Colors.white,
                   ),
-                  const SizedBox(
+                  const SizedBox( 
                     width: 8,
                   ),
-                  SelectableText(
-                    name ?? '',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                    ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SelectableText(
+                        user!.displayName!,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                        ),
+                      ),
+                      SelectableText(
+                        user!.email!,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 13.5,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -99,4 +113,5 @@ Drawer enddrawer(BuildContext context, String? name) {
       ],
     ),
   );
+}
 }

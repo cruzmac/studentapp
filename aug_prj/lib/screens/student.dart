@@ -30,7 +30,7 @@ class _StudentDashState extends State<StudentDash> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      endDrawer: enddrawer(context,name),
+      endDrawer: EndDrawer().enddrawer(context,name),
       appBar: AppBar(
         title: const Text('Student DashBoard'),
         centerTitle: true,

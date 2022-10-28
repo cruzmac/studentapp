@@ -1,7 +1,7 @@
 class LogIn {
   int? id;
   String? firstname;
-  String? lastname;
+  String? lastname; 
   String? location;
 
   LogIn({this.id, this.firstname, this.lastname, this.location});
