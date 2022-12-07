@@ -77,13 +77,13 @@ class _LoginPageState extends State<LoginPage> {
             Image.network(
               'https://img.freepik.com/premium-vector/graphic-designer-creating-his-artwork-using-computer_80802-1077.jpg',
               fit: BoxFit.fitHeight,
-              height: 400,
+              height: 400, 
             ),
             Stack(children: [
               Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                child: Column(
+                child:Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Center(

@@ -16,7 +16,7 @@ class _StudentDashState extends State<StudentDash> {
   @override
   void initState() {
      super.initState();
-    name = Preference.instance.getEmail();
+    name = Preference.instance.getEmail(); 
    
   }
   List<ListModel> list = [
@@ -26,6 +26,7 @@ class _StudentDashState extends State<StudentDash> {
     ListModel(
         name: 'Create Account', color: Colors.redAccent, type: 'createacct'),
     ListModel(name: 'List', color: Colors.blueAccent, type: 'acctlist'),
+    ListModel(name: 'Attendance', color: Colors.deepOrangeAccent, type: 'attendance_marking'),
   ];
   @override
   Widget build(BuildContext context) {
@@ -58,6 +59,9 @@ class _StudentDashState extends State<StudentDash> {
                     case 'acctlist':
                       Navigator.of(context).pushNamed('/acctlist');
                       break;
+                    case 'attendance_marking':
+                      Navigator.of(context).pushNamed('/attendance_marking');
+                      break;  
                   }
                 },
                 textColor: Colors.white,

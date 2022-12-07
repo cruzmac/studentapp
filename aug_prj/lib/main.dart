@@ -1,6 +1,7 @@
 import 'package:aug_prj/Utils/preference.dart';
 import 'package:aug_prj/authentication.dart';
 import 'package:aug_prj/models/loginmodel.dart';
+import 'package:aug_prj/screens/attendance_marking.dart';
 import 'package:aug_prj/screens/edit_page.dart';
 import 'package:aug_prj/screens/events.dart';
 import 'package:aug_prj/screens/home_page.dart'; 
@@ -71,6 +72,10 @@ Route<dynamic>? pageroutes(RouteSettings settings) {
       return (MaterialPageRoute(
           settings: settings,
           builder: (BuildContext context) => const AcctList()));
+    case '/attendance_marking':
+      return (MaterialPageRoute(
+          settings: settings,
+          builder: (BuildContext context) => const AttendanceMarkingPage()));      
     case '/editpost':
       final login = settings.arguments as LogIn;
       return (MaterialPageRoute(
