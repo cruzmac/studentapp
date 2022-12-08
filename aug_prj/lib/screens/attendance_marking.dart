@@ -20,12 +20,11 @@ class _AttendanceMarkingPageState extends State<AttendanceMarkingPage> {
         centerTitle: true,
       ),
       body: Container(
-        height: 100,
+        height: 200,
         width: 400,
-        color: Colors.grey,
         child: Row(
           children: [
-            DropDownButton(),
+            Dropdown(),
           ],
         ),
       ),
@@ -33,31 +32,32 @@ class _AttendanceMarkingPageState extends State<AttendanceMarkingPage> {
   }
 }
 
-class DropDownButton extends StatefulWidget {
-  const DropDownButton({Key? key}) : super(key: key);
+class Dropdown extends StatefulWidget {
+  const Dropdown({Key? key}) : super(key: key);
 
   @override
-  State<DropDownButton> createState() => _DropDownButtonState();
+  State<Dropdown> createState() => _DropdownState();
 }
 
-class _DropDownButtonState extends State<DropDownButton> {
-  List<String> list = <String>['One', 'Two', 'Three', 'Four'];
-
+class _DropdownState extends State<Dropdown> {
+  List<String> list = ['Apple', 'Orange', 'Carrot'];
+  String? selecteditem = 'Apple';
   @override
   Widget build(BuildContext context) {
-    String dropdownValue = list.first;
-    return DropdownButton(
-      items: list.map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Text(value),
-        );
-      }).toList(),
-      onChanged: (String? value) {
-        setState(() {
-          dropdownValue = value!;
-        });
-      },
+    return Container(
+      margin: const EdgeInsets.only(top:50),
+      alignment: Alignment.topCenter,
+      child: DropdownButton(
+        value: selecteditem,
+        onChanged: (value) {
+          setState(() {
+            selecteditem = value.toString();
+          });
+        },
+        items: list.map((item) {
+          return DropdownMenuItem(value: item, child: Text(item));
+        }).toList(),
+      ),
     );
   }
 }
