@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import '../design/ListTile_attendance.dart';
+import '../design/dropdownbox.dart';
 import '../design/end_drawer.dart';
 
 class AttendanceMarkingPage extends StatefulWidget {
@@ -20,43 +21,53 @@ class _AttendanceMarkingPageState extends State<AttendanceMarkingPage> {
         centerTitle: true,
       ),
       body: Container(
-        height: 200,
-        width: 400,
-        child: Row(
+        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 15),
+        child: Column(
           children: [
-            Dropdown(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: const [
+                SizedBox(
+                  height: 75,
+                  width: 120,
+                  child: Dropdown(),
+                ),
+                SizedBox(
+                  height: 75,
+                  width: 120,
+                  child: Dropdown(),
+                ),
+                SizedBox(
+                  height: 75,
+                  width: 120,
+                  child: Dropdown(),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 60,
+              width: 400,
+              child: Dropdown(),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Container(
+              height: 500,
+              decoration: BoxDecoration(
+                  border: Border.all(width: 2),
+                  borderRadius: BorderRadius.circular(20)),
+              child: GridView.builder(
+                itemCount: 100,
+                itemBuilder: (context, index) => ItemTile(index),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 2,
+                ),
+              ),
+            ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class Dropdown extends StatefulWidget {
-  const Dropdown({Key? key}) : super(key: key);
-
-  @override
-  State<Dropdown> createState() => _DropdownState();
-}
-
-class _DropdownState extends State<Dropdown> {
-  List<String> list = ['Apple', 'Orange', 'Carrot'];
-  String? selecteditem = 'Apple';
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(top:50),
-      alignment: Alignment.topCenter,
-      child: DropdownButton(
-        value: selecteditem,
-        onChanged: (value) {
-          setState(() {
-            selecteditem = value.toString();
-          });
-        },
-        items: list.map((item) {
-          return DropdownMenuItem(value: item, child: Text(item));
-        }).toList(),
       ),
     );
   }
