@@ -1,5 +1,6 @@
+import 'package:aug_prj/design/azlistview_design.dart';
 import 'package:flutter/material.dart';
-import '../design/ListTile_attendance.dart';
+import '../design/listTile_attendance.dart';
 import '../design/dropdownbox.dart';
 import '../design/end_drawer.dart';
 
@@ -52,18 +53,34 @@ class _AttendanceMarkingPageState extends State<AttendanceMarkingPage> {
             const SizedBox(
               height: 20,
             ),
-            Container(
-              height: 500,
-              decoration: BoxDecoration(
-                  border: Border.all(width: 2),
-                  borderRadius: BorderRadius.circular(20)),
-              child: GridView.builder(
-                itemCount: 100,
-                itemBuilder: (context, index) => ItemTile(index),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 2,
-                ),
+            Expanded(
+              child: Container(
+                height: 500,
+                decoration: BoxDecoration(
+                    border: Border.all(width: 2),
+                    borderRadius: BorderRadius.circular(20)),
+                    child: AtozListview(items: [
+                      'Ambrose',
+                      'Machado',
+                      'Cruz',
+                      'Alfred',
+                      'Saranya',
+                      'Sharmila',
+                      'Sanjai',
+                      'Ragesh',
+                      'Tony',
+                      'Troy',
+                      'Petrose'
+                    ]),
+                // child: GridView.builder(
+                //   shrinkWrap: true,
+                //   itemCount: 100,
+                //   itemBuilder: (context, index) => ItemTile(index),
+                //   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                //     crossAxisCount: 2,
+                //     childAspectRatio: 2,
+                //   ),
+                // ),
               ),
             ),
           ],
