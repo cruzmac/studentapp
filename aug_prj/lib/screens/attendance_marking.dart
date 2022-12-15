@@ -55,8 +55,10 @@ class _AttendanceMarkingPageState extends State<AttendanceMarkingPage> {
             ),
             Expanded(
               child: Container(
+                padding: EdgeInsets.only(left: 10,bottom: 10,top: 10),
                 height: 500,
                 decoration: BoxDecoration(
+                  color: Colors.black12,
                     border: Border.all(width: 2),
                     borderRadius: BorderRadius.circular(20)),
                     child: AtozListview(items: [

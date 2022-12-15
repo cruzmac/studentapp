@@ -33,15 +33,28 @@ class _AtozListviewState extends State<AtozListview> {
         .toList();
 
     SuspensionUtil.sortListBySuspensionTag(this.items);
+    SuspensionUtil.setShowSuspensionStatus(this.items);
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     Widget buildListItem(AZItem item) {
-      return ListTile(
-        title: Text(item.title),
-        // onTap: () =>widget.OnClickedItem(item.title),
+      final tag = item.getSuspensionTag();
+      final offstage = !item.isShowSuspension;
+      return Column(
+        children: [
+          Offstage(offstage: offstage, child: buildHeader(tag)),
+          ListTile(
+            trailing: Container(
+              height: 35,
+              width: 100,
+              decoration: BoxDecoration(color: Colors.cyanAccent),
+            ),
+            title: Text(item.title),
+            // onTap: () =>widget.OnClickedItem(item.title),
+          ),
+        ],
       );
     }
 
@@ -52,6 +65,45 @@ class _AtozListviewState extends State<AtozListview> {
         final item = items[index];
         return buildListItem(item);
       }),
+      indexHintBuilder: (context, hint) {
+        return Container(
+          height: 65,
+          width: 65,
+          alignment: Alignment.center,
+          decoration: const BoxDecoration(
+              color: Colors.black45, shape: BoxShape.circle),
+          child: Text(
+            hint,
+            style: const TextStyle(color: Colors.white, fontSize: 25),
+          ),
+        );
+      },
+      indexBarMargin: const EdgeInsets.all(7),
+      indexBarOptions: const IndexBarOptions(
+        needRebuild: true,
+        selectTextStyle: TextStyle(
+            color: Colors.white, fontWeight: FontWeight.bold, fontSize: 15),
+        selectItemDecoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: Colors.black45,
+        ),
+        indexHintAlignment: Alignment.centerRight,
+        indexHintOffset: Offset(-20, 0),
+      ),
+    );
+  }
+
+  Widget buildHeader(String tag) {
+    return Container(
+      padding: const EdgeInsets.only(left: 10), 
+      height: 40,
+      alignment: Alignment.centerLeft,
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),color: Colors.black12 ),
+      child: Text(
+        '$tag',
+        softWrap: false,
+        style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+      ),
     );
   }
 }
