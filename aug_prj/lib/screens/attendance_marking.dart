@@ -25,38 +25,22 @@ class _AttendanceMarkingPageState extends State<AttendanceMarkingPage> {
         padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 15),
         child: Column(
           children: [
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-            //   children: const [
-            //     SizedBox(
-            //       height: 75,
-            //       width: 120,
-            //       child: Dropdown(),
-            //     ),
-            //     SizedBox(
-            //       height: 75,
-            //       width: 120,
-            //       child: Dropdown(),
-            //     ),
-            //     SizedBox(
-            //       height: 75,
-            //       width: 120,
-            //       child: Dropdown(),
-            //     ),
-            //   ],
-            // ),
-            // const SizedBox(
-            //   height: 60,
-            //   width: 400,
-            //   child: Dropdown(),
-            // ),
-            // const SizedBox(
-            //   height: 20,
-            // ),
             Expanded(
               child: AtozListview(items: [
                 'Ambrose',
                 'Machado',
+                'Dhanushiya',
+                'Divya',
+                'Durga',
+                'Gautam',
+                'Mahalingam',
+                'Kavin',
+                'Kavin Jai',
+                'Uthra',
+                'Uvan',
+                'Nithiya',
+                'Praveen',
+                'Raji',
                 'Cruz',
                 'Alfred',
                 'Saranya',

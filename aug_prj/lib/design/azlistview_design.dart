@@ -6,7 +6,7 @@ class AZItem extends ISuspensionBean {
   final String tag;
   late bool ispresent;
 
-  AZItem({required this.title, required this.tag,required this.ispresent});
+  AZItem({required this.title, required this.tag, required this.ispresent});
 
   @override
   String getSuspensionTag() => tag;
@@ -30,7 +30,8 @@ class _AtozListviewState extends State<AtozListview> {
 
   void initList(List<String> items) {
     this.items = items
-        .map((item) => AZItem(title: item, tag: item[0].toUpperCase(), ispresent: true))
+        .map((item) =>
+            AZItem(title: item, tag: item[0].toUpperCase(), ispresent: true))
         .toList();
 
     SuspensionUtil.sortListBySuspensionTag(this.items);
@@ -44,45 +45,61 @@ class _AtozListviewState extends State<AtozListview> {
       final tag = item.getSuspensionTag();
       final offstage = !item.isShowSuspension;
       return Container(
-        padding: const EdgeInsets.only(right: 30, left: 10),
+        padding: const EdgeInsets.only(right: 40, left: 10),
         color: Colors.white,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Offstage(offstage: offstage, child: buildHeader(tag)),
-           const SizedBox(height: 10,),
+            const SizedBox(
+              height: 10,
+            ),
             Container(
               height: 80,
               decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 150, 209, 246) ,
-                border:Border.all(color: Colors.black45,width: 3),
-                borderRadius: BorderRadius.circular(20)
-              ),
+                  color: const Color.fromARGB(255, 150, 209, 246),
+                  border: Border.all(color: Colors.black45, width: 3),
+                  borderRadius: BorderRadius.circular(20)),
               child: ListTile(
-                trailing: GestureDetector(
-                  onDoubleTap: () {
-                    setState(() {
-                      item.ispresent = !item.ispresent;
-                    });
-                  },
-                  child:Container(
-                    alignment: Alignment.center,
-                    height: 40,
-                    width: 100,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black45,width: 2,),
-                      borderRadius: BorderRadius.circular(30),
-                      color: item.ispresent ? Colors.green : Colors.red,
-                      shape: BoxShape.rectangle,
+                trailing: InkWell(
+                  splashColor: Colors.white.withOpacity(0.5),
+                  onDoubleTap:() {
+                      setState(() {
+                        item.ispresent = !item.ispresent;
+                      });
+                    },
+                  child: Ink(
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: 40,
+                      width: 100,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.black45,
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(30),
+                        color: item.ispresent ? Colors.green : Colors.red,
+                        shape: BoxShape.rectangle,
+                      ),
+                      child: Text(
+                        item.ispresent ? 'Present' : 'Absent',
+                        style: const TextStyle(color: Colors.white, fontSize: 20),
+                      ),
                     ),
-                    child:Text(item.ispresent ?'Present':'Absent',
-                    style:const TextStyle(color: Colors.white,fontSize: 20),),
                   ),
                 ),
-                title: Text(item.title,),
+                title: Text(
+                  item.title,
+                  style: const TextStyle(fontSize: 20),
+                ),
+                subtitle: Text('17MSS001'),
                 // onTap: () =>widget.OnClickedItem(item.title),
               ),
             ),
-            const SizedBox(height: 10,)
+            const SizedBox(
+              height: 10,
+            )
           ],
         ),
       );
@@ -109,7 +126,7 @@ class _AtozListviewState extends State<AtozListview> {
         );
       },
       indexBarMargin: const EdgeInsets.all(2),
-      indexBarItemHeight:23,
+      indexBarItemHeight: 23,
       indexBarOptions: const IndexBarOptions(
         needRebuild: true,
         selectTextStyle: TextStyle(
@@ -126,9 +143,9 @@ class _AtozListviewState extends State<AtozListview> {
 
   Widget buildHeader(String tag) {
     return Container(
-      padding: const EdgeInsets.only(left: 10),
+      width: 40,
       height: 40,
-      alignment: Alignment.centerLeft,
+      alignment: Alignment.center,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15), color: Colors.black12),
       child: Text(
