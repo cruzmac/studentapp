@@ -1,49 +1,66 @@
+import 'package:aug_prj/Utils/http_error.dart';
+import 'package:aug_prj/models/attendance_model.dart';
 import 'package:azlistview/azlistview.dart';
 import 'package:flutter/material.dart';
 
-class AZItem extends ISuspensionBean {
-  final String title;
-  final String tag;
-  late bool ispresent;
+import '../repository/attendance_repository.dart';
 
-  AZItem({required this.title, required this.tag, required this.ispresent});
+// class AZItem extends ISuspensionBean {
+//   final String title;
+//   final String tag;
+//   late bool ispresent;
 
-  @override
-  String getSuspensionTag() => tag;
-}
+//   AZItem({required this.title, required this.tag, required this.ispresent});
+
+//   @override
+//   String getSuspensionTag() => tag;
+// }
 
 class AtozListview extends StatefulWidget {
-  const AtozListview({Key? key, required this.items}) : super(key: key);
-  final List<String> items;
+  const AtozListview({Key? key, required this.list}) : super(key: key);
+  final List<Attendance> list;
 
   @override
   State<AtozListview> createState() => _AtozListviewState();
 }
 
 class _AtozListviewState extends State<AtozListview> {
-  List<AZItem> items = [];
-  @override
-  void initState() {
-    super.initState();
-    initList(widget.items);
-  }
+  List<Attendance> attendancelist = widget.list;
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   fetchpost();
+  // }
 
-  void initList(List<String> items) {
-    this.items = items
-        .map((item) =>
-            AZItem(title: item, tag: item[0].toUpperCase(), ispresent: true))
-        .toList();
+  // Future<void> fetchpost() async {
+  //   try {
+  //     final attend = await AttendanceRepository().fetchposts();
+  //     setState(() {
+  //       attendancelist = attend;
+  //     });
+  //   } on HttpError catch (e) {
+  //     ScaffoldMessenger.of(context)
+  //         .showSnackBar(SnackBar(content: Text(e.message)));
+  //   }
+  // }
 
-    SuspensionUtil.sortListBySuspensionTag(this.items);
-    SuspensionUtil.setShowSuspensionStatus(this.items);
-    setState(() {});
-  }
+  // void initList(List<String> items) {
+  //   this.items = items
+  //       .map((item) =>
+  //           AZItem(title: item, tag: item[0].toUpperCase(), ispresent: true))
+  //       .toList();
+
+  //   SuspensionUtil.sortListBySuspensionTag(this.items);
+  //   SuspensionUtil.setShowSuspensionStatus(this.items);
+  //   setState(() {});
+  // }
 
   @override
   Widget build(BuildContext context) {
-    Widget buildListItem(AZItem item) {
-      final tag = item.getSuspensionTag();
-      final offstage = !item.isShowSuspension;
+    Widget buildListItem(Attendance attendancelist) {
+      final tag = attendancelist.getSuspensionTag();
+      final offstage = !attendancelist.isShowSuspension;
+       bool ispresent = attendancelist.attendance ?? true;
       return Container(
         padding: const EdgeInsets.only(right: 40, left: 10),
         color: Colors.white,
@@ -63,11 +80,11 @@ class _AtozListviewState extends State<AtozListview> {
               child: ListTile(
                 trailing: InkWell(
                   splashColor: Colors.white.withOpacity(0.5),
-                  onDoubleTap:() {
-                      setState(() {
-                        item.ispresent = !item.ispresent;
-                      });
-                    },
+                  onDoubleTap: () {
+                    setState(() {
+                      ispresent = !ispresent;
+                    });
+                  },
                   child: Ink(
                     child: Container(
                       alignment: Alignment.center,
@@ -79,21 +96,24 @@ class _AtozListviewState extends State<AtozListview> {
                           width: 2,
                         ),
                         borderRadius: BorderRadius.circular(30),
-                        color: item.ispresent ? Colors.green : Colors.red,
+                        color: ispresent
+                            ? Colors.green
+                            : Colors.red,
                         shape: BoxShape.rectangle,
                       ),
                       child: Text(
-                        item.ispresent ? 'Present' : 'Absent',
-                        style: const TextStyle(color: Colors.white, fontSize: 20),
+                        ispresent ? 'Present' : 'Absent',
+                        style:
+                            const TextStyle(color: Colors.white, fontSize: 20),
                       ),
                     ),
                   ),
                 ),
                 title: Text(
-                  item.title,
+                  '${attendancelist.name}',
                   style: const TextStyle(fontSize: 20),
                 ),
-                subtitle: Text('17MSS001'),
+                subtitle: Text('${attendancelist.stud_id}'),
                 // onTap: () =>widget.OnClickedItem(item.title),
               ),
             ),
@@ -106,10 +126,10 @@ class _AtozListviewState extends State<AtozListview> {
     }
 
     return AzListView(
-      data: items,
-      itemCount: items.length,
+      data: attendancelist,
+      itemCount: attendancelist.length,
       itemBuilder: ((context, index) {
-        final item = items[index];
+        final item = attendancelist[index];
         return buildListItem(item);
       }),
       indexHintBuilder: (context, hint) {

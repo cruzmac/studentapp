@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ListModel{
+class ListModel{ 
   String? name;
   Color? color; 
   String? type;

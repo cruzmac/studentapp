@@ -1,8 +1,9 @@
 import 'package:aug_prj/design/azlistview_design.dart';
+import 'package:aug_prj/models/attendance_model.dart';
 import 'package:flutter/material.dart';
-import '../design/listTile_attendance.dart';
-import '../design/dropdownbox.dart';
+import '../Utils/http_error.dart';
 import '../design/end_drawer.dart';
+import '../repository/attendance_repository.dart';
 
 class AttendanceMarkingPage extends StatefulWidget {
   const AttendanceMarkingPage({Key? key}) : super(key: key);
@@ -12,6 +13,24 @@ class AttendanceMarkingPage extends StatefulWidget {
 }
 
 class _AttendanceMarkingPageState extends State<AttendanceMarkingPage> {
+   List<Attendance> attendancelist = [];
+  @override
+  void initState() {
+    super.initState();
+    fetchpost();
+  }
+
+  Future<void> fetchpost() async {
+    try {
+      final attend = await AttendanceRepository().fetchposts();
+      setState(() {
+        attendancelist = attend;
+      });
+    } on HttpError catch (e) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(e.message)));
+    }
+  }
   @override
   Widget build(BuildContext context) {
     String? name;
@@ -26,31 +45,7 @@ class _AttendanceMarkingPageState extends State<AttendanceMarkingPage> {
         child: Column(
           children: [
             Expanded(
-              child: AtozListview(items: [
-                'Ambrose',
-                'Machado',
-                'Dhanushiya',
-                'Divya',
-                'Durga',
-                'Gautam',
-                'Mahalingam',
-                'Kavin',
-                'Kavin Jai',
-                'Uthra',
-                'Uvan',
-                'Nithiya',
-                'Praveen',
-                'Raji',
-                'Cruz',
-                'Alfred',
-                'Saranya',
-                'Sharmila',
-                'Sanjai',
-                'Ragesh',
-                'Tony',
-                'Troy',
-                'Petrose'
-              ]),
+              child: AtozListview(list: attendancelist),
             ),
           ],
         ),
