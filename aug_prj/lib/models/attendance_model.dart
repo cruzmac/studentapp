@@ -1,10 +1,10 @@
 import 'package:azlistview/azlistview.dart';
 
 class Attendance extends ISuspensionBean {
-  String? stud_id;
+  int? stud_id;
   String? name;
   late bool? attendance;
-  String? tag;
+  late String? tag;
 
   Attendance({this.stud_id, this.name, this.attendance, this.tag});
 

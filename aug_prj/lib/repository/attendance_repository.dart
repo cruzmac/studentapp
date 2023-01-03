@@ -5,7 +5,7 @@ import 'package:http/http.dart';
 import 'dart:convert';
 
 class AttendanceRepository {
-  static const baseurl = 'http://localhost:4000';
+  static const baseurl = 'http://college.odooformybusiness.com';
 
   static Uri uri(String path) {
     return Uri.parse('$baseurl/$path');
@@ -18,10 +18,9 @@ class AttendanceRepository {
       if (response.statusCode >= 200 && response.statusCode < 300) {
         final body = jsonDecode(response.body);
         if (body is List) {
-          final posts = body.map((e) => Attendance.fromJson(e)).toList(); 
-        SuspensionUtil.sortListBySuspensionTag(posts);
-        SuspensionUtil.setShowSuspensionStatus(posts);
-        
+          final posts = body.map((e) => Attendance.fromJson(e)).toList();
+          // SuspensionUtil.sortListBySuspensionTag(posts);
+          // SuspensionUtil.setShowSuspensionStatus(posts);
           return posts;
         } else {
           return [];
@@ -31,15 +30,14 @@ class AttendanceRepository {
       }
     } catch (e) {
       throw HttpError(e.toString());
-    } 
+    }
   }
 
-
-  static Future updateList(int id, Attendance atten) async {
+  static Future updateList(int stud_id, Attendance atten) async {
     try {
-      final url = uri('attendance/$id');
+      final url = uri('attendance/$stud_id');
       final loginMap = {
-        'stud_id': id,
+        'stud_id': stud_id,
         'name': atten.name,
         'attendance': atten.attendance,
       };

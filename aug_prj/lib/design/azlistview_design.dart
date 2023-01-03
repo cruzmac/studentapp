@@ -1,9 +1,8 @@
 import 'package:aug_prj/Utils/http_error.dart';
 import 'package:aug_prj/models/attendance_model.dart';
+import 'package:aug_prj/repository/attendance_repository.dart';
 import 'package:azlistview/azlistview.dart';
 import 'package:flutter/material.dart';
-
-import '../repository/attendance_repository.dart';
 
 // class AZItem extends ISuspensionBean {
 //   final String title;
@@ -25,106 +24,45 @@ class AtozListview extends StatefulWidget {
 }
 
 class _AtozListviewState extends State<AtozListview> {
-  List<Attendance> attendancelist = widget.list;
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   fetchpost();
-  // }
+  List<Attendance> attendancelist = [];
+  @override
+  void initState() {
+    super.initState();
+    fetchpost();
+    initList(attendancelist);
+    // setState(() {
+    //   SuspensionUtil.sortListBySuspensionTag(attendancelist);
+    //   SuspensionUtil.setShowSuspensionStatus(attendancelist);
+    // });
+  }
 
-  // Future<void> fetchpost() async {
-  //   try {
-  //     final attend = await AttendanceRepository().fetchposts();
-  //     setState(() {
-  //       attendancelist = attend;
-  //     });
-  //   } on HttpError catch (e) {
-  //     ScaffoldMessenger.of(context)
-  //         .showSnackBar(SnackBar(content: Text(e.message)));
-  //   }
-  // }
+  Future<void> fetchpost() async {
+    try {
+      final attend = await AttendanceRepository().fetchposts();
+      setState(() {
+        attendancelist = attend;
+      });
+    } on HttpError catch (e) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(e.message)));
+    }
+  }
 
-  // void initList(List<String> items) {
-  //   this.items = items
-  //       .map((item) =>
-  //           AZItem(title: item, tag: item[0].toUpperCase(), ispresent: true))
-  //       .toList();
-
-  //   SuspensionUtil.sortListBySuspensionTag(this.items);
-  //   SuspensionUtil.setShowSuspensionStatus(this.items);
-  //   setState(() {});
-  // }
+  void initList(List<Attendance> list) {
+    attendancelist = list
+        .map((item) => Attendance(
+            stud_id: item.stud_id,
+            name: item.name,
+            attendance: item.attendance,
+            tag: item.name![0].toUpperCase()))
+        .toList();
+    SuspensionUtil.sortListBySuspensionTag(attendancelist);
+    SuspensionUtil.setShowSuspensionStatus(attendancelist);
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
-    Widget buildListItem(Attendance attendancelist) {
-      final tag = attendancelist.getSuspensionTag();
-      final offstage = !attendancelist.isShowSuspension;
-       bool ispresent = attendancelist.attendance ?? true;
-      return Container(
-        padding: const EdgeInsets.only(right: 40, left: 10),
-        color: Colors.white,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Offstage(offstage: offstage, child: buildHeader(tag)),
-            const SizedBox(
-              height: 10,
-            ),
-            Container(
-              height: 80,
-              decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 150, 209, 246),
-                  border: Border.all(color: Colors.black45, width: 3),
-                  borderRadius: BorderRadius.circular(20)),
-              child: ListTile(
-                trailing: InkWell(
-                  splashColor: Colors.white.withOpacity(0.5),
-                  onDoubleTap: () {
-                    setState(() {
-                      ispresent = !ispresent;
-                    });
-                  },
-                  child: Ink(
-                    child: Container(
-                      alignment: Alignment.center,
-                      height: 40,
-                      width: 100,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.black45,
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(30),
-                        color: ispresent
-                            ? Colors.green
-                            : Colors.red,
-                        shape: BoxShape.rectangle,
-                      ),
-                      child: Text(
-                        ispresent ? 'Present' : 'Absent',
-                        style:
-                            const TextStyle(color: Colors.white, fontSize: 20),
-                      ),
-                    ),
-                  ),
-                ),
-                title: Text(
-                  '${attendancelist.name}',
-                  style: const TextStyle(fontSize: 20),
-                ),
-                subtitle: Text('${attendancelist.stud_id}'),
-                // onTap: () =>widget.OnClickedItem(item.title),
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            )
-          ],
-        ),
-      );
-    }
-
     return AzListView(
       data: attendancelist,
       itemCount: attendancelist.length,
@@ -157,6 +95,71 @@ class _AtozListviewState extends State<AtozListview> {
         ),
         indexHintAlignment: Alignment.centerRight,
         indexHintOffset: Offset(-20, 0),
+      ),
+    );
+  }
+
+  Widget buildListItem(Attendance list) {
+    final tag = list.getSuspensionTag();
+    final offstage = list.isShowSuspension;
+    bool ispresent = list.attendance ?? true;
+    return Container(
+      padding: const EdgeInsets.only(right: 40, left: 10),
+      color: Colors.white,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Offstage(offstage: offstage, child: buildHeader(tag)),
+          const SizedBox(
+            height: 10,
+          ),
+          Container(
+            height: 80,
+            decoration: BoxDecoration(
+                color: const Color.fromARGB(255, 150, 209, 246),
+                border: Border.all(color: Colors.black45, width: 3),
+                borderRadius: BorderRadius.circular(20)),
+            child: ListTile(
+              trailing: InkWell(
+                splashColor: Colors.white.withOpacity(0.5),
+                onDoubleTap: () {
+                  setState(() {
+                    ispresent = !ispresent;
+                  });
+                },
+                child: Ink(
+                  child: Container(
+                    alignment: Alignment.center,
+                    height: 40,
+                    width: 100,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.black45,
+                        width: 2,
+                      ),
+                      borderRadius: BorderRadius.circular(30),
+                      color: ispresent ? Colors.green : Colors.red,
+                      shape: BoxShape.rectangle,
+                    ),
+                    child: Text(
+                      ispresent ? 'Present' : 'Absent',
+                      style: const TextStyle(color: Colors.white, fontSize: 20),
+                    ),
+                  ),
+                ),
+              ),
+              title: Text(
+                '${list.name}',
+                style: const TextStyle(fontSize: 20),
+              ),
+              subtitle: Text('${list.stud_id}'),
+              // onTap: () =>widget.OnClickedItem(item.title),
+            ),
+          ),
+          const SizedBox(
+            height: 10,
+          )
+        ],
       ),
     );
   }

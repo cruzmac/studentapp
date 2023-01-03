@@ -1,9 +1,9 @@
+import 'package:aug_prj/Utils/http_error.dart';
 import 'package:aug_prj/design/azlistview_design.dart';
 import 'package:aug_prj/models/attendance_model.dart';
+import 'package:aug_prj/repository/attendance_repository.dart';
 import 'package:flutter/material.dart';
-import '../Utils/http_error.dart';
 import '../design/end_drawer.dart';
-import '../repository/attendance_repository.dart';
 
 class AttendanceMarkingPage extends StatefulWidget {
   const AttendanceMarkingPage({Key? key}) : super(key: key);
@@ -13,24 +13,25 @@ class AttendanceMarkingPage extends StatefulWidget {
 }
 
 class _AttendanceMarkingPageState extends State<AttendanceMarkingPage> {
-   List<Attendance> attendancelist = [];
-  @override
-  void initState() {
-    super.initState();
-    fetchpost();
-  }
+  List<Attendance> attendancelist = [];
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   fetchpost();
+  // }
 
-  Future<void> fetchpost() async {
-    try {
-      final attend = await AttendanceRepository().fetchposts();
-      setState(() {
-        attendancelist = attend;
-      });
-    } on HttpError catch (e) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(e.message)));
-    }
-  }
+  // Future<void> fetchpost() async {
+  //   try {
+  //     final attend = await AttendanceRepository().fetchposts();
+  //     setState(() {
+  //       attendancelist = attend;
+  //     });
+  //   } on HttpError catch (e) {
+  //     ScaffoldMessenger.of(context)
+  //         .showSnackBar(SnackBar(content: Text(e.message)));
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
     String? name;

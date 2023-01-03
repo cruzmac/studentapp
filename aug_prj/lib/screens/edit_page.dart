@@ -81,7 +81,7 @@ class _EditPostPageState extends State<EditPostPage> {
         child: Form(
           child: Column(
             children: [
-              TextFormField(
+              TextFormField( 
                 controller: usernameController,
                 maxLines: 2,
                 minLines: 1,
