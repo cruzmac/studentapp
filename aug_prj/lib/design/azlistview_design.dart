@@ -92,7 +92,7 @@ class _AtozListviewState extends State<AtozListview> {
             tag: item.name![0].toUpperCase()))
         .toList();
     // SuspensionUtil.sortListBySuspensionTag(attendancelist);
-    // SuspensionUtil.setShowSuspensionStatus(attendancelist); 
+    // SuspensionUtil.setShowSuspensionStatus(attendancelist);
     setState(() {});
   }
 
@@ -138,7 +138,6 @@ class _AtozListviewState extends State<AtozListview> {
     final tag = list.getSuspensionTag();
     final offstage = !list.isShowSuspension;
     final attend = list;
-    bool ispresent = list.attendance ?? true;
     return Container(
       padding: const EdgeInsets.only(right: 40, left: 10),
       color: Colors.white,
@@ -160,9 +159,9 @@ class _AtozListviewState extends State<AtozListview> {
                 splashColor: Colors.white.withOpacity(0.5),
                 onDoubleTap: () {
                   setState(() {
-                    ispresent = !ispresent;
+                    list.attendance = !list.attendance;
                   });
-                  updateAttendance(attend, ispresent);
+                  // updateAttendance(attend, ispresent);
                 },
                 child: Ink(
                   child: Container(
@@ -175,11 +174,11 @@ class _AtozListviewState extends State<AtozListview> {
                         width: 2,
                       ),
                       borderRadius: BorderRadius.circular(30),
-                      color: ispresent ? Colors.green : Colors.red,
+                      color: list.attendance ? Colors.green : Colors.red,
                       shape: BoxShape.rectangle,
                     ),
                     child: Text(
-                      ispresent ? 'Present' : 'Absent',
+                      list.attendance ? 'Present' : 'Absent',
                       style: const TextStyle(color: Colors.white, fontSize: 20),
                     ),
                   ),
