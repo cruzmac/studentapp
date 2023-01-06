@@ -19,8 +19,8 @@ class AttendanceRepository {
         final body = jsonDecode(response.body);
         if (body is List) {
           final posts = body.map((e) => Attendance.fromJson(e)).toList();
-          // SuspensionUtil.sortListBySuspensionTag(posts);
-          // SuspensionUtil.setShowSuspensionStatus(posts);
+          SuspensionUtil.sortListBySuspensionTag(posts);
+          SuspensionUtil.setShowSuspensionStatus(posts);
           return posts;
         } else {
           return [];
@@ -36,7 +36,7 @@ class AttendanceRepository {
   static Future updateList(int stud_id, Attendance atten) async {
     try {
       final url = uri('attendance/$stud_id');
-      final loginMap = {
+      final attendanceMap = {
         'stud_id': stud_id,
         'name': atten.name,
         'attendance': atten.attendance,
@@ -45,7 +45,7 @@ class AttendanceRepository {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: jsonEncode(loginMap));
+          body: jsonEncode(attendanceMap));
       if (response.statusCode >= 200 && response.statusCode < 300) {
         final body = response.body;
       } else {

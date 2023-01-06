@@ -4,36 +4,21 @@ import 'package:aug_prj/repository/attendance_repository.dart';
 import 'package:azlistview/azlistview.dart';
 import 'package:flutter/material.dart';
 
-// class AZItem extends ISuspensionBean {
-//   final String title;
-//   final String tag;
-//   late bool ispresent;
-
-//   AZItem({required this.title, required this.tag, required this.ispresent});
-
-//   @override
-//   String getSuspensionTag() => tag;
-// }
-
 class AtozListview extends StatefulWidget {
   const AtozListview({Key? key, required this.list}) : super(key: key);
   final List<Attendance> list;
-
   @override
   State<AtozListview> createState() => _AtozListviewState();
 }
 
 class _AtozListviewState extends State<AtozListview> {
   List<Attendance> attendancelist = [];
+  late Attendance attendance;
   @override
   void initState() {
     super.initState();
     fetchpost();
     initList(attendancelist);
-    // setState(() {
-    //   SuspensionUtil.sortListBySuspensionTag(attendancelist);
-    //   SuspensionUtil.setShowSuspensionStatus(attendancelist);
-    // });
   }
 
   Future<void> fetchpost() async {
@@ -48,6 +33,56 @@ class _AtozListviewState extends State<AtozListview> {
     }
   }
 
+  Future<void> updateAttendance(Attendance attend, bool attendance) async {
+    final post = attend;
+    final id = attend.stud_id;
+
+    if (id == null) return;
+
+    final updatedPost = Attendance(
+      stud_id: id,
+      name: post.name,
+      attendance: attendance,
+    );
+    try {
+      final result = await AttendanceRepository.updateList(id, updatedPost);
+      if (result is Attendance) {
+        final index = attendancelist
+            .indexWhere((element) => element.stud_id == attend.stud_id);
+        if (index != -1) {
+          setState(() {
+            attendancelist[index] = result;
+          });
+        }
+      }
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          elevation: 0,
+          backgroundColor: Colors.green,
+          behavior: SnackBarBehavior.floating,
+          content: Row(
+            children: const [
+              Icon(
+                Icons.check_circle,
+                color: Colors.white,
+              ),
+              SizedBox(width: 10),
+              Text(
+                'Post Updated successfully',
+              ),
+            ],
+          ),
+        ),
+      );
+    } on HttpError catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(e.message),
+        ),
+      );
+    }
+  }
+
   void initList(List<Attendance> list) {
     attendancelist = list
         .map((item) => Attendance(
@@ -56,8 +91,8 @@ class _AtozListviewState extends State<AtozListview> {
             attendance: item.attendance,
             tag: item.name![0].toUpperCase()))
         .toList();
-    SuspensionUtil.sortListBySuspensionTag(attendancelist);
-    SuspensionUtil.setShowSuspensionStatus(attendancelist);
+    // SuspensionUtil.sortListBySuspensionTag(attendancelist);
+    // SuspensionUtil.setShowSuspensionStatus(attendancelist); 
     setState(() {});
   }
 
@@ -68,7 +103,7 @@ class _AtozListviewState extends State<AtozListview> {
       itemCount: attendancelist.length,
       itemBuilder: ((context, index) {
         final item = attendancelist[index];
-        return buildListItem(item);
+        return buildListItem(item, index);
       }),
       indexHintBuilder: (context, hint) {
         return Container(
@@ -84,7 +119,7 @@ class _AtozListviewState extends State<AtozListview> {
         );
       },
       indexBarMargin: const EdgeInsets.all(2),
-      indexBarItemHeight: 23,
+      indexBarItemHeight: 18,
       indexBarOptions: const IndexBarOptions(
         needRebuild: true,
         selectTextStyle: TextStyle(
@@ -99,9 +134,10 @@ class _AtozListviewState extends State<AtozListview> {
     );
   }
 
-  Widget buildListItem(Attendance list) {
+  Widget buildListItem(Attendance list, int index) {
     final tag = list.getSuspensionTag();
-    final offstage = list.isShowSuspension;
+    final offstage = !list.isShowSuspension;
+    final attend = list;
     bool ispresent = list.attendance ?? true;
     return Container(
       padding: const EdgeInsets.only(right: 40, left: 10),
@@ -126,6 +162,7 @@ class _AtozListviewState extends State<AtozListview> {
                   setState(() {
                     ispresent = !ispresent;
                   });
+                  updateAttendance(attend, ispresent);
                 },
                 child: Ink(
                   child: Container(

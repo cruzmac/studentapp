@@ -29,7 +29,7 @@ class _EditPostPageState extends State<EditPostPage> {
   Future<void> updatePost() async {
     final post = widget.login;
     final id = post?.id;
-    if (id == null) return; 
+    if (id == null) return;  
 
     final updatedPost = LogIn(
       firstname: usernameController.text,
@@ -40,26 +40,25 @@ class _EditPostPageState extends State<EditPostPage> {
     try {
       final result = await LoginRepository.updateList(id, updatedPost);
       print(result);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          elevation: 0,
-          backgroundColor: Colors.green,
-          behavior: SnackBarBehavior.floating,
-          content: Row(
-            children: const [
-              Icon(
-                Icons.check_circle,
-                color: Colors.white,
-              ),
-              SizedBox(width: 10),
-              Text(
-                'Post Updated successfully',
-              ),
-            ],
-          ),
-        ),
-      );
-      Navigator.pop(context, result);
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(
+      //     elevation: 0,
+      //     backgroundColor: Colors.green,
+      //     behavior: SnackBarBehavior.floating,
+      //     content: Row(
+      //       children: const [
+      //         Icon(
+      //           Icons.check_circle,
+      //           color: Colors.white,
+      //         ),
+      //         SizedBox(width: 10),
+      //         Text(
+      //           'Post Updated successfully',
+      //         ),
+      //       ],
+      //     ),
+      //   ),
+      // );
     } on HttpError catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -81,7 +80,7 @@ class _EditPostPageState extends State<EditPostPage> {
         child: Form(
           child: Column(
             children: [
-              TextFormField( 
+              TextFormField(  
                 controller: usernameController,
                 maxLines: 2,
                 minLines: 1,

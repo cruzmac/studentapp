@@ -31,7 +31,7 @@ class LoginRepository {
   }
 
   Future<LogIn> fetchpost(int id) async {
-    try {
+    try { 
       final url = uri('users/$id');
       final response = await get(url);
       if (response.statusCode >= 200 && response.statusCode < 300) {
