@@ -5,7 +5,7 @@ import 'package:http/http.dart';
 import 'dart:convert';
 
 class AttendanceRepository {
-  static const baseurl = 'http://college.odooformybusiness.com';
+  static const baseurl = 'https://odooformybusiness.com';
 
   static Uri uri(String path) {
     return Uri.parse('$baseurl/$path');
@@ -33,11 +33,11 @@ class AttendanceRepository {
     }
   }
 
-  static Future updateList(int stud_id, Attendance atten) async {
+  static Future updateList(int? studId, Attendance atten) async {
     try {
-      final url = uri('attendance/$stud_id');
+      final url = uri('attendance/$studId');
       final attendanceMap = {
-        'stud_id': stud_id,
+        'stud_id': studId,
         'name': atten.name,
         'attendance': atten.attendance,
       };

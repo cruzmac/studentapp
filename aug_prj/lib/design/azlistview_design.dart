@@ -1,18 +1,19 @@
 import 'package:aug_prj/Utils/http_error.dart';
+import 'package:aug_prj/design/updatelist.dart';
 import 'package:aug_prj/models/attendance_model.dart';
 import 'package:aug_prj/repository/attendance_repository.dart';
 import 'package:azlistview/azlistview.dart';
 import 'package:flutter/material.dart';
 
 class AtozListview extends StatefulWidget {
-  const AtozListview({Key? key, required this.list}) : super(key: key);
-  final List<Attendance> list;
+  const AtozListview({Key? key}) : super(key: key);
   @override
   State<AtozListview> createState() => _AtozListviewState();
 }
 
 class _AtozListviewState extends State<AtozListview> {
   List<Attendance> attendancelist = [];
+  List<Attendance> updatedlist = [];
   late Attendance attendance;
   @override
   void initState() {
@@ -33,55 +34,58 @@ class _AtozListviewState extends State<AtozListview> {
     }
   }
 
-  Future<void> updateAttendance(Attendance attend, bool attendance) async {
+  Future<void> updateAttendance(Attendance attend) async {
     final post = attend;
     final id = attend.stud_id;
 
     if (id == null) return;
-
     final updatedPost = Attendance(
       stud_id: id,
       name: post.name,
-      attendance: attendance,
+      attendance: post.attendance,
     );
-    try {
-      final result = await AttendanceRepository.updateList(id, updatedPost);
-      if (result is Attendance) {
-        final index = attendancelist
-            .indexWhere((element) => element.stud_id == attend.stud_id);
-        if (index != -1) {
-          setState(() {
-            attendancelist[index] = result;
-          });
-        }
-      }
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          elevation: 0,
-          backgroundColor: Colors.green,
-          behavior: SnackBarBehavior.floating,
-          content: Row(
-            children: const [
-              Icon(
-                Icons.check_circle,
-                color: Colors.white,
-              ),
-              SizedBox(width: 10),
-              Text(
-                'Post Updated successfully',
-              ),
-            ],
-          ),
-        ),
-      );
-    } on HttpError catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(e.message),
-        ),
-      );
-    }
+    updatedlist.add(updatedPost);
+    UpdatedList().list = updatedlist;
+    // AttendanceMarkingPage list = AttendanceMarkingPage(list: updatedlist);
+    // print(list);
   }
+  // try {
+  //   final result = await AttendanceRepository.updateList(id, updatedPost);
+  //   if (result is Attendance) {
+  //     final index = attendancelist
+  //         .indexWhere((element) => element.stud_id == attend.stud_id);
+  //     if (index != -1) {
+  //       setState(() {
+  //         attendancelist[index] = result;
+  //       });
+  //     }
+  //   }
+  //   ScaffoldMessenger.of(context).showSnackBar(
+  //     SnackBar(
+  //       elevation: 0,
+  //       backgroundColor: Colors.green,
+  //       behavior: SnackBarBehavior.floating,
+  //       content: Row(
+  //         children: const [
+  //           Icon(
+  //             Icons.check_circle,
+  //             color: Colors.white,
+  //           ),
+  //           SizedBox(width: 10),
+  //           Text(
+  //             'Post Updated successfully',
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // } on HttpError catch (e) {
+  //   ScaffoldMessenger.of(context).showSnackBar(
+  //     SnackBar(
+  //       content: Text(e.message),
+  //     ),
+  //   );
+  // }
 
   void initList(List<Attendance> list) {
     attendancelist = list
@@ -161,7 +165,7 @@ class _AtozListviewState extends State<AtozListview> {
                   setState(() {
                     list.attendance = !list.attendance;
                   });
-                  // updateAttendance(attend, ispresent);
+                  updateAttendance(attend);
                 },
                 child: Ink(
                   child: Container(

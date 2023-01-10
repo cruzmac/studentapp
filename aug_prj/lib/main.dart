@@ -4,7 +4,7 @@ import 'package:aug_prj/models/loginmodel.dart';
 import 'package:aug_prj/screens/attendance_marking.dart';
 import 'package:aug_prj/screens/edit_page.dart';
 import 'package:aug_prj/screens/events.dart';
-import 'package:aug_prj/screens/home_page.dart'; 
+import 'package:aug_prj/screens/home_page.dart';
 import 'package:aug_prj/screens/list.dart';
 import 'package:aug_prj/screens/login_page.dart';
 import 'package:aug_prj/screens/signup.dart';
@@ -15,7 +15,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
- 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Preference.instance.initPreference();
@@ -28,16 +27,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) => MaterialApp(
-          title: 'Flutter Demo',
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            // textTheme: GoogleFonts.lobsterTextTheme(Theme.of(context).textTheme),
-            fontFamily: GoogleFonts.lato().fontFamily,
-            appBarTheme: const AppBarTheme(backgroundColor: Colors.black12),
-          ),
-          home: const AuthService(),
-          onGenerateRoute: pageroutes,
-  );  
+        title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          fontFamily: GoogleFonts.lato().fontFamily,
+          appBarTheme: const AppBarTheme(backgroundColor: Colors.black12),
+        ),
+        home: const AuthService(),
+        onGenerateRoute: pageroutes,
+      );
 }
 
 Route<dynamic>? pageroutes(RouteSettings settings) {
@@ -75,7 +73,7 @@ Route<dynamic>? pageroutes(RouteSettings settings) {
     case '/attendance_marking':
       return (MaterialPageRoute(
           settings: settings,
-          builder: (BuildContext context) => const AttendanceMarkingPage()));      
+          builder: (BuildContext context) => AttendanceMarkingPage()));
     case '/editpost':
       final login = settings.arguments as LogIn;
       return (MaterialPageRoute(

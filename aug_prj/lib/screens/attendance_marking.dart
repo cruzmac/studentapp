@@ -1,23 +1,23 @@
 import 'package:aug_prj/Utils/http_error.dart';
 import 'package:aug_prj/design/azlistview_design.dart';
+import 'package:aug_prj/design/updatelist.dart';
 import 'package:aug_prj/models/attendance_model.dart';
+import 'package:aug_prj/repository/attendance_repository.dart';
 import 'package:flutter/material.dart';
 import '../design/end_drawer.dart';
 
 class AttendanceMarkingPage extends StatefulWidget {
-  const AttendanceMarkingPage({Key? key}) : super(key: key);
-
+  AttendanceMarkingPage({Key? key}) : super(key: key);
   @override
   State<AttendanceMarkingPage> createState() => _AttendanceMarkingPageState();
 }
 
 class _AttendanceMarkingPageState extends State<AttendanceMarkingPage> {
-  List<Attendance> attendancelist = [];
-
+  List<Attendance> uplist = UpdatedList().list;
   @override
   Widget build(BuildContext context) {
     String? name;
-    bool color = true;
+    // bool color = true;
     return Scaffold(
       endDrawer: EndDrawer().enddrawer(context, name),
       appBar: AppBar(
@@ -28,8 +28,8 @@ class _AttendanceMarkingPageState extends State<AttendanceMarkingPage> {
         padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 15),
         child: Column(
           children: [
-            Expanded(
-              child: AtozListview(list: attendancelist),
+            const Expanded(
+              child: AtozListview(),
             ),
             Container(
               alignment: Alignment.centerRight,
@@ -40,12 +40,14 @@ class _AttendanceMarkingPageState extends State<AttendanceMarkingPage> {
                 height: 55,
                 width: 150,
                 child: ElevatedButton(
-                    onPressed: () {},
-                    child:Text('Save'),
+                    onPressed: () {
+                      updatelist();
+                    },
+                    child: Text('Save'),
                     style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
                         backgroundColor: Colors.black26,
                         textStyle: const TextStyle(
                             fontSize: 20, fontWeight: FontWeight.w400))),
@@ -55,5 +57,40 @@ class _AttendanceMarkingPageState extends State<AttendanceMarkingPage> {
         ),
       ),
     );
+  }
+
+  Future<void> updatelist() async {
+    final updatedlist = uplist;
+    for (Attendance post in updatedlist) {
+      try {
+        final result =
+            await AttendanceRepository.updateList(post.stud_id, post);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            elevation: 0,
+            backgroundColor: Colors.green,
+            behavior: SnackBarBehavior.floating,
+            content: Row(
+              children: const [
+                Icon(
+                  Icons.check_circle,
+                  color: Colors.white,
+                ),
+                SizedBox(width: 10),
+                Text(
+                  'Attendance Updated Successfully',
+                ),
+              ],
+            ),
+          ),
+        );
+      } on HttpError catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(e.message),
+          ),
+        );
+      }
+    }
   }
 }
