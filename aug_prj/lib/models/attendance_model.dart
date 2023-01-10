@@ -1,12 +1,12 @@
 import 'package:azlistview/azlistview.dart';
 
 class Attendance extends ISuspensionBean {
-  int? stud_id;
+  late int stud_id;
   String? name;
   late bool attendance;
   late String? tag;
 
-  Attendance({this.stud_id, this.name,required this.attendance, this.tag});
+  Attendance({required this.stud_id, this.name,required this.attendance, this.tag});
 
   Attendance.fromJson(Map<String, dynamic> json) {
     stud_id = json['stud_id'];

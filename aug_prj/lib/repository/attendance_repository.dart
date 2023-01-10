@@ -33,9 +33,9 @@ class AttendanceRepository {
     }
   }
 
-  static Future updateList(int? studId, Attendance atten) async {
+  static Future updateList(int studId, Attendance atten) async {
     try {
-      final url = uri('attendance/$studId');
+      final url = uri('student_attendance/$studId');
       final attendanceMap = {
         'stud_id': studId,
         'name': atten.name,

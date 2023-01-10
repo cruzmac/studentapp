@@ -45,7 +45,7 @@ class _AtozListviewState extends State<AtozListview> {
       attendance: post.attendance,
     );
     updatedlist.add(updatedPost);
-    UpdatedList().list = updatedlist;
+     UpdatedList().list = updatedlist;
     // AttendanceMarkingPage list = AttendanceMarkingPage(list: updatedlist);
     // print(list);
   }
