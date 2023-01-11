@@ -60,25 +60,6 @@ class _AttendanceMarkingPageState extends State<AttendanceMarkingPage> {
       try {
         final result =
             await AttendanceRepository.updateList(post.stud_id, post);
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            elevation: 0,
-            backgroundColor: Colors.green,
-            behavior: SnackBarBehavior.floating,
-            content: Row(
-              children: const [
-                Icon(
-                  Icons.check_circle,
-                  color: Colors.white,
-                ),
-                SizedBox(width: 10),
-                Text(
-                  'Attendance Updated Successfully',
-                ),
-              ],
-            ),
-          ),
-        );
       } on HttpError catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -87,6 +68,25 @@ class _AttendanceMarkingPageState extends State<AttendanceMarkingPage> {
         );
       }
     }
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        elevation: 0,
+        backgroundColor: Colors.green,
+        behavior: SnackBarBehavior.floating,
+        content: Row(
+          children: const [
+            Icon(
+              Icons.check_circle,
+              color: Colors.white,
+            ),
+            SizedBox(width: 10),
+            Text(
+              'Attendance Updated Successfully',
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   void initList(List<Attendance> list) {
