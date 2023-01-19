@@ -1,11 +1,10 @@
 import 'package:aug_prj/Utils/http_error.dart';
-import 'package:aug_prj/design/azlistview_design.dart';
-import 'package:aug_prj/design/updatelist.dart';
 import 'package:aug_prj/models/attendance_model.dart';
 import 'package:aug_prj/repository/attendance_repository.dart';
 import 'package:azlistview/azlistview.dart';
 import 'package:flutter/material.dart';
 import '../design/end_drawer.dart';
+import 'package:intl/intl.dart';
 
 class AttendanceMarkingPage extends StatefulWidget {
   AttendanceMarkingPage({Key? key}) : super(key: key);
@@ -14,16 +13,28 @@ class AttendanceMarkingPage extends StatefulWidget {
 }
 
 class _AttendanceMarkingPageState extends State<AttendanceMarkingPage> {
-  //List<Attendance> uplist = UpdatedList().list;
   List<Attendance> attendancelist = [];
   List<Attendance> updatedlist = [];
   late Attendance attendance;
+  var finalDate;
+  var finalTime;
 
   @override
   void initState() {
     super.initState();
     fetchpost();
     initList(attendancelist);
+  }
+
+  getCurrentDate() {
+    var date = new DateTime.now().toString();
+    var dateParse = DateTime.parse(date);
+    var formattedDate = "${dateParse.day}-${dateParse.month}-${dateParse.year}";
+    var formattedTime = "${dateParse.hour}:${dateParse.second}";
+    setState(() {
+      finalTime = formattedTime.toString();
+      finalDate = formattedDate.toString();
+    });
   }
 
   Future<void> fetchpost() async {
@@ -39,6 +50,7 @@ class _AttendanceMarkingPageState extends State<AttendanceMarkingPage> {
   }
 
   Future<void> updateAttendance(Attendance attend) async {
+    getCurrentDate();
     final post = attend;
     final id = attend.stud_id;
 
@@ -47,12 +59,11 @@ class _AttendanceMarkingPageState extends State<AttendanceMarkingPage> {
       stud_id: id,
       name: post.name,
       attendance: post.attendance,
+      date: finalDate,
+      time: finalTime,
     );
     updatedlist.add(updatedPost);
     print(updatedlist);
-    // UpdatedList().list = updatedlist;
-    // AttendanceMarkingPage list = AttendanceMarkingPage(list: updatedlist);
-    // print(list);
   }
 
   Future<void> updatelist() async {

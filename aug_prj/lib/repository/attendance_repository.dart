@@ -40,6 +40,8 @@ class AttendanceRepository {
         'stud_id': studId,
         'name': atten.name,
         'attendance': atten.attendance,
+        'date':atten.date,
+        'time':atten.time,
       };
       final response = await put(url,
           headers: {

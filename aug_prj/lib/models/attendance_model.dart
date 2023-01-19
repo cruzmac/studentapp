@@ -5,8 +5,11 @@ class Attendance extends ISuspensionBean {
   String? name;
   late bool attendance;
   late String? tag;
+  late String? time;
+  late String? date;
 
-  Attendance({required this.stud_id, this.name,required this.attendance, this.tag});
+  Attendance(
+      {required this.stud_id, this.name, required this.attendance, this.tag,this.date,this.time});
 
   Attendance.fromJson(Map<String, dynamic> json) {
     stud_id = json['stud_id'];
